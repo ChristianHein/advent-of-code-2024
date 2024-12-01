@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -9,12 +9,17 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.6.3" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.6.3" />
+    <PackageReference Include="NUnit" Version="4.2.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AdventOfCode2024\AdventOfCode2024.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\AdventOfCode2024\day*\input">
+      <Link>%(RelativeDir)\input</Link>
+    </Content>
   </ItemGroup>
   
 </Project>

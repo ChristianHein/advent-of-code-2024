@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="day*/input">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <Content Include="day*\input">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
 

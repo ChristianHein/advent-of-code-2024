@@ -12,7 +12,7 @@ public sealed class AdventOfCode2024
         PrintDay1Solution();
     }
 
-    private static string FormatDaySolution(Puzzle day)
+    private static string FormatDaySolutions(Puzzle day)
     {
         return $"Day {day:00}{Environment.NewLine}"
                + $"  Part 1 solution: '{day.Part1Solution()}'{Environment.NewLine}"
@@ -22,6 +22,6 @@ public sealed class AdventOfCode2024
     public static void PrintDay1Solution()
     {
         var day = new Day1(File.ReadAllLines("day01/input"));
-        Console.WriteLine(FormatDaySolution(day));
+        Console.WriteLine(FormatDaySolutions(day));
     }
 }
