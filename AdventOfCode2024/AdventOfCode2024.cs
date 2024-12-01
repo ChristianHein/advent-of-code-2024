@@ -16,7 +16,7 @@ public sealed class AdventOfCode2024
     {
         return $"Day {day:00}{Environment.NewLine}"
                + $"  Part 1 solution: '{day.Part1Solution()}'{Environment.NewLine}"
-               + $"  Part 2 solution: '{day.Part1Solution()}'{Environment.NewLine}";
+               + $"  Part 2 solution: '{day.Part2Solution()}'{Environment.NewLine}";
     }
 
     public static void PrintDay1Solution()
