@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace advent_of_code_2024.day01;
+namespace AdventOfCode2024.Day01;
 
 public class Day1(string[] input) : Puzzle(input)
 {

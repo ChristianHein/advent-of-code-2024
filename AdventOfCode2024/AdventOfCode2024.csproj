@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <RootNamespace>advent_of_code_2024</RootNamespace>
+        <RootNamespace>AdventOfCode2024</RootNamespace>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="day*\input">
+        <Content Include="Day*\input">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>

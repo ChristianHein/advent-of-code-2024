@@ -1,6 +1,6 @@
-﻿using advent_of_code_2024.day01;
+﻿using AdventOfCode2024.Day01;
 
-namespace advent_of_code_2024;
+namespace AdventOfCode2024;
 
 using JetBrains.Annotations;
 
@@ -21,7 +21,7 @@ public sealed class AdventOfCode2024
 
     public static void PrintDay1Solution()
     {
-        var day = new Day1(File.ReadAllLines("day01/input"));
+        var day = new Day1(File.ReadAllLines("Day01/input"));
         Console.WriteLine(FormatDaySolutions(day));
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using advent_of_code_2024.day01;
+using AdventOfCode2024.Day01;
 using NUnit.Framework;
 
 namespace AdventOfCode2024.Tests.day01;
@@ -8,7 +8,7 @@ namespace AdventOfCode2024.Tests.day01;
 [TestOf(typeof(Day1))]
 public class Day1Test
 {
-    private readonly string[] _realInput = File.ReadAllLines("day01/input");
+    private readonly string[] _realInput = File.ReadAllLines("Day01/input");
 
     [Test]
     public void UseRealInput_Part1Solution_IsCorrect()

@@ -1,4 +1,4 @@
-﻿namespace advent_of_code_2024;
+﻿namespace AdventOfCode2024;
 
 public abstract class Puzzle(string[] input)
 {
