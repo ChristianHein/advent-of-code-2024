@@ -25,13 +25,12 @@ public class Day1(string[] input) : Puzzle(input)
     public override string Part1Solution()
     {
         var (leftColumn, rightColumn) = ParseInput(Input);
+        Debug.Assert(leftColumn.Count == rightColumn.Count);
 
         leftColumn.Sort();
         rightColumn.Sort();
 
-        var distancesSum = leftColumn
-            .Select((left, i) => Math.Abs(left - rightColumn[i]))
-            .Sum();
+        var distancesSum = leftColumn.Zip(rightColumn, (l, r) => Math.Abs(l - r)).Sum();
 
         return distancesSum.ToString();
     }
