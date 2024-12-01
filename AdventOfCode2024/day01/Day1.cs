@@ -1,6 +1,6 @@
 ﻿namespace advent_of_code_2024.day01;
 
-public class Day1(string input) : Puzzle(input)
+public class Day1(string[] input) : Puzzle(input)
 {
     public override int Number => 1;
 

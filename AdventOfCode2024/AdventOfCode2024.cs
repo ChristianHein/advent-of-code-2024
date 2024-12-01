@@ -21,7 +21,7 @@ public sealed class AdventOfCode2024
 
     public static void PrintDay1Solution()
     {
-        var day = new Day1(File.ReadAllText("day01/input"));
+        var day = new Day1(File.ReadAllLines("day01/input"));
         Console.WriteLine(FormatDaySolution(day));
     }
 }
