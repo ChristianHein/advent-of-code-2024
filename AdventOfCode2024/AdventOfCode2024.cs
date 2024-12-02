@@ -1,4 +1,5 @@
-﻿using AdventOfCode2024.Day01;
+﻿using System.Diagnostics;
+using AdventOfCode2024.Day01;
 using AdventOfCode2024.Day02;
 
 namespace AdventOfCode2024;
@@ -14,13 +15,6 @@ public sealed class AdventOfCode2024
         PrintDay2Solution();
     }
 
-    private static string FormatDaySolutions(Puzzle day)
-    {
-        return $"Day {day:00}{Environment.NewLine}"
-               + $"  Part 1 solution: '{day.Part1Solution()}'{Environment.NewLine}"
-               + $"  Part 2 solution: '{day.Part2Solution()}'{Environment.NewLine}";
-    }
-
     public static void PrintDay1Solution()
     {
         var day = new Day1(File.ReadAllLines("Day01/input"));
@@ -31,5 +25,32 @@ public sealed class AdventOfCode2024
     {
         var day = new Day2(File.ReadAllLines("Day02/input"));
         Console.WriteLine(FormatDaySolutions(day));
+    }
+
+    private static string FormatDaySolutions(Puzzle day, bool printExecutionTimes = true)
+    {
+        var watch = Stopwatch.StartNew();
+        var part1Solution = day.Part1Solution();
+        var part1ElapsedMs = watch.ElapsedMilliseconds;
+
+        watch = Stopwatch.StartNew();
+        var part2Solution = day.Part2Solution();
+        var part2ElapsedMs = watch.ElapsedMilliseconds;
+
+        var output = $"Day {day.Number:00}{Environment.NewLine}";
+
+        output += $"  Part 1 solution: '{part1Solution}'{Environment.NewLine}";
+        if (printExecutionTimes)
+        {
+            output += $"  (execution time: {part1ElapsedMs} ms){Environment.NewLine}";
+        }
+
+        output += $"  Part 2 solution: '{part2Solution}'{Environment.NewLine}";
+        if (printExecutionTimes)
+        {
+            output += $"  (execution time: {part2ElapsedMs} ms){Environment.NewLine}";
+        }
+
+        return output;
     }
 }
