@@ -29,14 +29,24 @@ public static class ReportSafetyChecker
 
     private static bool IsAscending(Report report)
     {
-        var reportAscending = report.Order();
-        return report.SequenceEqual(reportAscending);
+        for (var i = 0; i < report.Count - 1; i++)
+        {
+            if (report[i] > report[i + 1])
+                return false;
+        }
+
+        return true;
     }
 
     private static bool IsDescending(Report report)
     {
-        var reportDescending = report.OrderDescending();
-        return report.SequenceEqual(reportDescending);
+        for (var i = 0; i < report.Count - 1; i++)
+        {
+            if (report[i] < report[i + 1])
+                return false;
+        }
+
+        return true;
     }
 
     private static bool HasOnlyGapsInInclusiveRange(Report report, int minimum, int maximum)
