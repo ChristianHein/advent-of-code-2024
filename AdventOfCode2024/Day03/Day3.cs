@@ -41,15 +41,15 @@ public partial class Day3(string[] input) : Puzzle(input)
         {
             Debug.Assert(match.Groups.Count == 6);
 
-            if (match.Groups["token_do"].Value != string.Empty)
+            if (HasMatched("token_do"))
             {
                 isMulInstructionEnabled = true;
             }
-            else if (match.Groups["token_dont"].Value != string.Empty)
+            else if (HasMatched("token_dont"))
             {
                 isMulInstructionEnabled = false;
             }
-            else if (match.Groups["token_mul"].Value != string.Empty)
+            else if (HasMatched("token_mul"))
             {
                 if (!isMulInstructionEnabled)
                     continue;
@@ -63,6 +63,10 @@ public partial class Day3(string[] input) : Puzzle(input)
             {
                 throw new ArgumentException($"Token '{match.Groups["token_do"].Value}' is not a valid token.");
             }
+
+            continue;
+
+            bool HasMatched(string tokenName) => match.Groups[tokenName].Value != string.Empty;
         }
 
         return mulValuePairs;
