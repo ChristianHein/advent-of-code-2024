@@ -2,7 +2,7 @@
 using AdventOfCode2024.Day01;
 using NUnit.Framework;
 
-namespace AdventOfCode2024.Tests.day01;
+namespace AdventOfCode2024.Tests.Day01;
 
 [TestFixture]
 [TestOf(typeof(Day1))]

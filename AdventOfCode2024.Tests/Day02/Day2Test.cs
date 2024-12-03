@@ -1,4 +1,5 @@
-﻿using AdventOfCode2024.Day02;
+﻿using System.IO;
+using AdventOfCode2024.Day02;
 using NUnit.Framework;
 
 namespace AdventOfCode2024.Tests.Day02;
@@ -7,6 +8,21 @@ namespace AdventOfCode2024.Tests.Day02;
 [TestOf(typeof(Day2))]
 public class Day2Test
 {
+    private readonly string[] _realInput = File.ReadAllLines("Day02/input");
+
+    [Test]
+    public void UseRealInput_Part1Solution_IsCorrect()
+    {
+        var day = new Day2(_realInput);
+        Assert.That(day.Part1Solution(), Is.EqualTo("220"));
+    }
+
+    [Test]
+    public void UseRealInput_Part2Solution_IsCorrect()
+    {
+        var day = new Day2(_realInput);
+        Assert.That(day.Part2Solution(), Is.EqualTo("296"));
+    }
 
     [Test]
     public void ReportWithSingleElement_IsReportSafe_IsTrue()

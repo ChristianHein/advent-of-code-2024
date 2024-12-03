@@ -3,60 +3,86 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode2024.Day03;
 
-public class Day3(string[] input) : Puzzle(input)
+public partial class Day3(string[] input) : Puzzle(input)
 {
     public override int Number => 3;
 
-    private List<(int, int)> ParseInputForMulInstructions()
+    [GeneratedRegex(@"mul\((?<arg1>\d+),(?<arg2>\d+)\)")]
+    private static partial Regex MulExprRegex();
+
+    [GeneratedRegex(@"(?<token_do>do)\(\)|(?<token_dont>don't)\(\)|(?<token_mul>mul)\((?<arg1>\d+),(?<arg2>\d+)\)")]
+    private static partial Regex AllExprRegex();
+
+    private List<(int, int)> ParseAllMulInstructions()
     {
-        var result = new List<(int, int)>();
-        var mulRegex = new Regex(@"mul\((\d+),(\d+)\)");
-        foreach (Match match in mulRegex.Matches(Input.Aggregate((a, b) => a + b)))
+        var mulValuePairs = new List<(int, int)>();
+        var mulRegex = MulExprRegex();
+        foreach (Match match in mulRegex.Matches(string.Join("", Input)))
         {
             Debug.Assert(match.Groups.Count == 3);
-            result.Add((int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value)));
+
+            var arg1 = match.Groups["arg1"].Value;
+            var arg2 = match.Groups["arg2"].Value;
+            var mulPair = (int.Parse(arg1), int.Parse(arg2));
+            mulValuePairs.Add(mulPair);
         }
 
-        return result;
+        return mulValuePairs;
     }
 
-    private List<(int, int)> ParseInputForAllInstructions()
+    private List<(int, int)> ParseMulInstructionsConditionally()
     {
-        var isMulInstructionEnabled = true;
-        var result = new List<(int, int)>();
-        var mulRegex = new Regex(@"(do)\(\)|(mul)\((\d+),(\d+)\)|(don't)\(\)");
-        foreach (Match match in mulRegex.Matches(Input.Aggregate((a, b) => a + b)))
-        {
-            Debug.Assert(match.Groups.Count is 6);
+        var regex = AllExprRegex();
 
-            if (match.Groups[2].Value == "mul")
-            {
-                if (!isMulInstructionEnabled)
-                    continue;
-                result.Add((int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value)));
-            }
-            else if (match.Groups[1].Value == "do")
+        var mulValuePairs = new List<(int, int)>();
+        var isMulInstructionEnabled = true;
+
+        foreach (Match match in regex.Matches(string.Join("", Input)))
+        {
+            Debug.Assert(match.Groups.Count == 6);
+
+            if (match.Groups["token_do"].Value != string.Empty)
             {
                 isMulInstructionEnabled = true;
             }
-            else if (match.Groups[5].Value == "don't")
+            else if (match.Groups["token_dont"].Value != string.Empty)
             {
                 isMulInstructionEnabled = false;
             }
+            else if (match.Groups["token_mul"].Value != string.Empty)
+            {
+                if (!isMulInstructionEnabled)
+                    continue;
+
+                var arg1 = match.Groups["arg1"].Value;
+                var arg2 = match.Groups["arg2"].Value;
+                var mulPair = (int.Parse(arg1), int.Parse(arg2));
+                mulValuePairs.Add(mulPair);
+            }
+            else
+            {
+                throw new ArgumentException($"Token '{match.Groups["token_do"].Value}' is not a valid token.");
+            }
         }
 
-        return result;
+        return mulValuePairs;
     }
 
     public override string Part1Solution()
     {
-        var mulInstructions = ParseInputForMulInstructions();
-        return mulInstructions.Select(instr => instr.Item1 * instr.Item2).Sum().ToString();
+        var mulValuePairs = ParseAllMulInstructions();
+        return mulValuePairs
+            .Select(val => val.Item1 * val.Item2)
+            .Sum()
+            .ToString();
     }
 
     public override string Part2Solution()
     {
-        var mulInstructions = ParseInputForAllInstructions();
-        return mulInstructions.Select(instr => instr.Item1 * instr.Item2).Sum().ToString();
+        var mulValuePairs = ParseMulInstructionsConditionally();
+        return mulValuePairs
+            .Select(val => val.Item1 * val.Item2)
+            .Sum()
+            .ToString();
     }
 }
