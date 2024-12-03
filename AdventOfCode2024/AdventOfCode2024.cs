@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using AdventOfCode2024.Day01;
 using AdventOfCode2024.Day02;
+using AdventOfCode2024.Day03;
 
 namespace AdventOfCode2024;
 
@@ -13,6 +14,7 @@ public sealed class AdventOfCode2024
     {
         PrintDay1Solution();
         PrintDay2Solution();
+        PrintDay3Solution();
     }
 
     public static void PrintDay1Solution()
@@ -24,6 +26,12 @@ public sealed class AdventOfCode2024
     public static void PrintDay2Solution()
     {
         var day = new Day2(File.ReadAllLines("Day02/input"));
+        Console.WriteLine(FormatDaySolutions(day));
+    }
+
+    public static void PrintDay3Solution()
+    {
+        var day = new Day3(File.ReadAllLines("Day03/input"));
         Console.WriteLine(FormatDaySolutions(day));
     }
 
