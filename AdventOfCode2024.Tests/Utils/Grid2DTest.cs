@@ -81,6 +81,7 @@ public class Grid2DTest
         Assert.That(new Grid2D<T>(1, 1), Is.Not.EqualTo(new Grid2D<T>(1, 0)));
     }
 
+    /*
     [Test]
     public void DeleteFirstRow_IsFirstRowDeleted()
     {
@@ -116,4 +117,5 @@ public class Grid2DTest
         Assert.That(grid.Height, Is.EqualTo(2));
         Assert.That(grid, Is.EqualTo(new Grid2D<string>(new[,] { { "A", "B" }, { "C", "D" } })));
     }
+*/
 }

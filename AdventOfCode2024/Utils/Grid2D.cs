@@ -2,7 +2,7 @@
 
 public class Grid2D<T> : IEquatable<Grid2D<T>>
 {
-    private readonly List<T?> _flatGrid;
+    private List<T?> _flatGrid;
 
     public int Width { get; private set; }
     public int Height { get; private set; }
@@ -14,11 +14,14 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         _flatGrid = [];
     }
 
-    public Grid2D(string[,] matrix)
+    public static Grid2D<char> CreateGrid2D(string[] matrix)
     {
-        Width = matrix.GetLength(1);
-        Height = matrix.GetLength(0);
-        _flatGrid = matrix.Cast<T?>().ToList();
+        return new Grid2D<char>
+        {
+            Width = matrix.Length != 0 ? matrix[0].Length : 0,
+            Height = matrix.Length,
+            _flatGrid = string.Join("", matrix).ToCharArray().ToList(),
+        };
     }
 
     public Grid2D(int width, int height)
@@ -49,6 +52,28 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
             throw new IndexOutOfRangeException();
 
         return _flatGrid.GetRange(rowIndex * Width, Width);
+    }
+
+    public List<List<T?>> GetRows()
+    {
+        var result = new List<List<T?>>();
+        for (var rowIndex = 0; rowIndex < Height; rowIndex++)
+        {
+            result.Add(GetRow(rowIndex));
+        }
+
+        return result;
+    }
+
+    public List<List<T?>> GetColumns()
+    {
+        var result = new List<List<T?>>();
+        for (var columnIndex = 0; columnIndex < Height; columnIndex++)
+        {
+            result.Add(GetColumn(columnIndex));
+        }
+
+        return result;
     }
 
     public List<T?> GetColumn(int columnIndex)
@@ -111,6 +136,30 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         }
 
         Width--;
+    }
+
+    public void Transpose()
+    {
+        for (var rowIndex = 0; rowIndex < Height; rowIndex++)
+        {
+            for (var columnIndex = 0; columnIndex < Width; columnIndex++)
+            {
+                var a = GetCellValue(rowIndex, columnIndex);
+                var b = GetCellValue(columnIndex, rowIndex);
+                SetCellValue(rowIndex, columnIndex, b);
+                SetCellValue(rowIndex, columnIndex, a);
+            }
+        }
+    }
+
+    private void SetCellValue(int rowIndex, int columnIndex, T? cellValue)
+    {
+        if (rowIndex < 0 || rowIndex >= Height || columnIndex < 0 || columnIndex >= Width)
+        {
+            throw new IndexOutOfRangeException();
+        }
+
+        _flatGrid[rowIndex * Width + columnIndex] = cellValue;
     }
 
     public bool Equals(Grid2D<T>? other)
