@@ -19,7 +19,7 @@ public class Grid2DTest
         Assert.That(grid.Width, Is.EqualTo(0));
         Assert.That(grid.Height, Is.EqualTo(0));
 
-        Assert.That(() => grid.GetCellValue(0, 0), Throws.Exception.TypeOf<IndexOutOfRangeException>());
+        Assert.That(() => grid.GetCellValue((0, 0)), Throws.Exception.TypeOf<IndexOutOfRangeException>());
         Assert.That(() => grid.GetRow(0), Throws.Exception.TypeOf<IndexOutOfRangeException>());
         Assert.That(() => grid.GetColumn(0), Throws.Exception.TypeOf<IndexOutOfRangeException>());
         Assert.That(() => grid.RemoveRow(0), Throws.Exception.TypeOf<IndexOutOfRangeException>());
@@ -80,42 +80,4 @@ public class Grid2DTest
         Assert.That(new Grid2D<T>(1, 0), Is.Not.EqualTo(new Grid2D<T>(1, 1)));
         Assert.That(new Grid2D<T>(1, 1), Is.Not.EqualTo(new Grid2D<T>(1, 0)));
     }
-
-    /*
-    [Test]
-    public void DeleteFirstRow_IsFirstRowDeleted()
-    {
-        var grid = new Grid2D<string>(new[,] { { "A", "B" }, { "C", "D" }, { "E", "F" } });
-        Assert.That(grid.Width, Is.EqualTo(2));
-        Assert.That(grid.Height, Is.EqualTo(3));
-        grid.RemoveRow(0);
-        Assert.That(grid.Width, Is.EqualTo(2));
-        Assert.That(grid.Height, Is.EqualTo(2));
-        Assert.That(grid, Is.EqualTo(new Grid2D<string>(new[,] { { "C", "D" }, { "E", "F" } })));
-    }
-
-    [Test]
-    public void DeleteMiddleRow_IsMiddleRowDeleted()
-    {
-        var grid = new Grid2D<string>(new[,] { { "A", "B" }, { "C", "D" }, { "E", "F" } });
-        Assert.That(grid.Width, Is.EqualTo(2));
-        Assert.That(grid.Height, Is.EqualTo(3));
-        grid.RemoveRow(1);
-        Assert.That(grid.Width, Is.EqualTo(2));
-        Assert.That(grid.Height, Is.EqualTo(2));
-        Assert.That(grid, Is.EqualTo(new Grid2D<string>(new[,] { { "A", "B" }, { "E", "F" } })));
-    }
-
-    [Test]
-    public void DeleteLastRow_IsLastRowDeleted()
-    {
-        var grid = new Grid2D<string>(new[,] { { "A", "B" }, { "C", "D" }, { "E", "F" } });
-        Assert.That(grid.Width, Is.EqualTo(2));
-        Assert.That(grid.Height, Is.EqualTo(3));
-        grid.RemoveRow(2);
-        Assert.That(grid.Width, Is.EqualTo(2));
-        Assert.That(grid.Height, Is.EqualTo(2));
-        Assert.That(grid, Is.EqualTo(new Grid2D<string>(new[,] { { "A", "B" }, { "C", "D" } })));
-    }
-*/
 }

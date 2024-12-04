@@ -1,93 +1,104 @@
-﻿namespace AdventOfCode2024.Utils;
+﻿using System.Formats.Asn1;
+
+namespace AdventOfCode2024.Utils;
+
+public class Grid2DChar : Grid2D<char>
+{
+    public Grid2DChar(string[] matrix)
+    {
+        Width = matrix.Length == 0 ? 0 : matrix[0].Length;
+        Height = matrix.Length;
+        FlatGrid = string.Join("", matrix).ToCharArray().ToList();
+    }
+}
 
 public class Grid2D<T> : IEquatable<Grid2D<T>>
 {
-    private List<T?> _flatGrid;
+    protected List<T> FlatGrid;
 
-    public int Width { get; private set; }
-    public int Height { get; private set; }
+    public int Width { get; protected set; }
+    public int Height { get; protected set; }
 
     public Grid2D()
     {
         Width = 0;
         Height = 0;
-        _flatGrid = [];
-    }
-
-    public static Grid2D<char> CreateGrid2D(string[] matrix)
-    {
-        return new Grid2D<char>
-        {
-            Width = matrix.Length != 0 ? matrix[0].Length : 0,
-            Height = matrix.Length,
-            _flatGrid = string.Join("", matrix).ToCharArray().ToList(),
-        };
+        FlatGrid = [];
     }
 
     public Grid2D(int width, int height)
     {
         Width = width;
         Height = height;
-        _flatGrid = new List<T?>(width * height);
+        FlatGrid = new List<T>(width * height);
     }
 
-    public Grid2D(int width, int height, T? fillValue)
+    public Grid2D(int width, int height, T fillValue)
     {
         Width = width;
         Height = height;
-        _flatGrid = Enumerable.Repeat(fillValue, width * height).ToList();
+        FlatGrid = Enumerable.Repeat(fillValue, width * height).ToList();
     }
 
-    public T? GetCellValue(int rowIndex, int columnIndex)
+    public IEnumerable<(int, int)> GetCoordinatesEnumerable()
+    {
+        Console.WriteLine($"GetCoordinatesEnumerable: Height={Height}, Width={Width}");
+        var rowIndexes = Enumerable.Range(0, Height);
+        var columnIndexes = Enumerable.Range(0, Width);
+        // Cartesian product
+        return rowIndexes.SelectMany(_ => columnIndexes, (rowIndex, columnIndex) => (rowIndex, columnIndex));
+    }
+
+    public bool AreCoordsValid((int row, int column) coords)
+    {
+        return coords.row >= 0 && coords.row < Height && coords.column >= 0 && coords.column < Width;
+    }
+
+    public T GetCellValue((int row, int column) coords)
+    {
+        Console.WriteLine($"GetCellValue: {coords.row}, {coords.column}");
+        if (coords.row < 0 || coords.row >= Height)
+            throw new IndexOutOfRangeException("Row index is outside grid: " + coords.row);
+        if (coords.column < 0 || coords.column >= Width)
+            throw new IndexOutOfRangeException("Column index is outside of grid: " + coords.column);
+
+        return FlatGrid[coords.row * Width + coords.column];
+    }
+
+    public List<T> GetRow(int rowIndex)
     {
         if (rowIndex < 0 || rowIndex >= Height)
             throw new IndexOutOfRangeException();
 
-        return _flatGrid[rowIndex * Width + columnIndex];
+        return FlatGrid.GetRange(rowIndex * Width, Width);
     }
 
-    public List<T?> GetRow(int rowIndex)
+    public List<List<T>> GetRows()
     {
-        if (rowIndex < 0 || rowIndex >= Height)
-            throw new IndexOutOfRangeException();
-
-        return _flatGrid.GetRange(rowIndex * Width, Width);
+        return Enumerable.Range(0, Height)
+            .Select(GetRow)
+            .ToList();
     }
 
-    public List<List<T?>> GetRows()
-    {
-        var result = new List<List<T?>>();
-        for (var rowIndex = 0; rowIndex < Height; rowIndex++)
-        {
-            result.Add(GetRow(rowIndex));
-        }
-
-        return result;
-    }
-
-    public List<List<T?>> GetColumns()
-    {
-        var result = new List<List<T?>>();
-        for (var columnIndex = 0; columnIndex < Height; columnIndex++)
-        {
-            result.Add(GetColumn(columnIndex));
-        }
-
-        return result;
-    }
-
-    public List<T?> GetColumn(int columnIndex)
+    public List<T> GetColumn(int columnIndex)
     {
         if (columnIndex < 0 || columnIndex >= Width)
             throw new IndexOutOfRangeException();
 
-        var result = new List<T?>(Height);
+        var result = new List<T>(Height);
         for (var rowIndex = 0; rowIndex < Height; rowIndex++)
         {
-            result.Add(_flatGrid[rowIndex * Width + columnIndex]);
+            result.Add(FlatGrid[rowIndex * Width + columnIndex]);
         }
 
         return result;
+    }
+
+    public List<List<T>> GetColumns()
+    {
+        return Enumerable.Range(0, Width)
+            .Select(GetColumn)
+            .ToList();
     }
 
     public void InsertRow(int rowIndex, List<T> row)
@@ -97,7 +108,7 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         if (row.Count != Width)
             throw new ArgumentException("Inserted row must be same width as grid");
 
-        _flatGrid.InsertRange(rowIndex * Width, row);
+        FlatGrid.InsertRange(rowIndex * Width, row);
         Height++;
     }
 
@@ -110,7 +121,7 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
 
         for (var rowIndex = 0; rowIndex < Height; rowIndex++)
         {
-            _flatGrid.Insert(rowIndex * Width + columnIndex, column[rowIndex]);
+            FlatGrid.Insert(rowIndex * Width + columnIndex, column[rowIndex]);
         }
 
         Width++;
@@ -121,7 +132,7 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         if (rowIndex < 0 || rowIndex >= Height)
             throw new IndexOutOfRangeException();
 
-        _flatGrid.RemoveRange(rowIndex * Width, Width);
+        FlatGrid.RemoveRange(rowIndex * Width, Width);
         Height--;
     }
 
@@ -132,7 +143,7 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
 
         for (var rowIndex = 0; rowIndex < Height; rowIndex++)
         {
-            _flatGrid.RemoveAt(rowIndex * Width + columnIndex);
+            FlatGrid.RemoveAt(rowIndex * Width + columnIndex);
         }
 
         Width--;
@@ -144,29 +155,29 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         {
             for (var columnIndex = 0; columnIndex < Width; columnIndex++)
             {
-                var a = GetCellValue(rowIndex, columnIndex);
-                var b = GetCellValue(columnIndex, rowIndex);
-                SetCellValue(rowIndex, columnIndex, b);
-                SetCellValue(rowIndex, columnIndex, a);
+                var a = GetCellValue((rowIndex, columnIndex));
+                var b = GetCellValue((columnIndex, rowIndex));
+                SetCellValue((rowIndex, columnIndex), b);
+                SetCellValue((rowIndex, columnIndex), a);
             }
         }
     }
 
-    private void SetCellValue(int rowIndex, int columnIndex, T? cellValue)
+    private void SetCellValue((int row, int column) coords, T? cellValue)
     {
-        if (rowIndex < 0 || rowIndex >= Height || columnIndex < 0 || columnIndex >= Width)
+        if (coords.row < 0 || coords.row >= Height || coords.column < 0 || coords.column >= Width)
         {
             throw new IndexOutOfRangeException();
         }
 
-        _flatGrid[rowIndex * Width + columnIndex] = cellValue;
+        FlatGrid[coords.row * Width + coords.column] = cellValue;
     }
 
     public bool Equals(Grid2D<T>? other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
-        return _flatGrid.SequenceEqual(other._flatGrid)
+        return FlatGrid.SequenceEqual(other.FlatGrid)
                && Width == other.Width
                && Height == other.Height;
     }
@@ -181,7 +192,7 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
 
     public override int GetHashCode()
     {
-        return _flatGrid.GetHashCode();
+        return FlatGrid.GetHashCode();
     }
 
     public static bool operator ==(Grid2D<T>? left, Grid2D<T>? right)

@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 using AdventOfCode2024.Utils;
 
 namespace AdventOfCode2024.Day04;
@@ -9,84 +11,44 @@ public class Day4(string[] input) : Puzzle(input)
 
     public override string Part1Solution()
     {
+        const string searchString = "XMAS";
+
+        var grid = new Grid2DChar(Input);
+
         var totalCount = 0;
-        var grid = Grid2D<char>.CreateGrid2D(Input); // TODO: Generic type necessary?
-
-        for (var rowIndex = 0; rowIndex < grid.Height; rowIndex++)
+        foreach (var coords in grid.GetCoordinatesEnumerable())
         {
-            for (var columnIndex = 0; columnIndex < grid.Width; columnIndex++)
-            {
-                if (grid.GetCellValue(columnIndex, rowIndex) != 'X')
-                    continue;
+            if (grid.GetCellValue(coords) != 'X')
+                continue;
 
-                var inGridRangeAndValueEquals = (int rowI, int colI, char cellValue) =>
-                    rowI >= 0 && rowI < grid.Height && colI >= 0 && colI < grid.Width
-                    && grid.GetCellValue(colI, rowI) == cellValue;
+            // @formatter:off
+            // ReSharper disable InconsistentNaming
+            var N =  (-1,  0);
+            var NE = (-1,  1);
+            var E =  ( 0,  1);
+            var SE = ( 1,  1);
+            var S =  ( 1,  0);
+            var SW = ( 1, -1);
+            var W =  ( 0, -1);
+            var NW = (-1, -1);
+            // ReSharper restore InconsistentNaming
 
-                // NE diagonal
-                if (inGridRangeAndValueEquals(rowIndex - 1, columnIndex + 1, 'M') &&
-                    inGridRangeAndValueEquals(rowIndex - 2, columnIndex + 2, 'A') &&
-                    inGridRangeAndValueEquals(rowIndex - 3, columnIndex + 3, 'S'))
-                {
-                    totalCount++;
-                }
+            if (MatchesInDirection(N)) { totalCount++; }
+            if (MatchesInDirection(NE)) { totalCount++; }
+            if (MatchesInDirection(E)) { totalCount++; }
+            if (MatchesInDirection(SE)) { totalCount++; }
+            if (MatchesInDirection(S)) { totalCount++; }
+            if (MatchesInDirection(SW)) { totalCount++; }
+            if (MatchesInDirection(W)) { totalCount++; }
+            if (MatchesInDirection(NW)) { totalCount++; }
+            // @formatter:on
 
-                // SE diagonal
-                if (inGridRangeAndValueEquals(rowIndex + 1, columnIndex + 1, 'M') &&
-                    inGridRangeAndValueEquals(rowIndex + 2, columnIndex + 2, 'A') &&
-                    inGridRangeAndValueEquals(rowIndex + 3, columnIndex + 3, 'S'))
-                {
-                    totalCount++;
-                }
+            continue;
 
-                // SW diagonal
-                if (inGridRangeAndValueEquals(rowIndex + 1, columnIndex - 1, 'M') &&
-                    inGridRangeAndValueEquals(rowIndex + 2, columnIndex - 2, 'A') &&
-                    inGridRangeAndValueEquals(rowIndex + 3, columnIndex - 3, 'S'))
-                {
-                    totalCount++;
-                }
-
-                // NW diagonal
-                if (inGridRangeAndValueEquals(rowIndex - 1, columnIndex - 1, 'M') &&
-                    inGridRangeAndValueEquals(rowIndex - 2, columnIndex - 2, 'A') &&
-                    inGridRangeAndValueEquals(rowIndex - 3, columnIndex - 3, 'S'))
-                {
-                    totalCount++;
-                }
-
-                // N vertical
-                if (inGridRangeAndValueEquals(rowIndex - 1, columnIndex, 'M') &&
-                    inGridRangeAndValueEquals(rowIndex - 2, columnIndex, 'A') &&
-                    inGridRangeAndValueEquals(rowIndex - 3, columnIndex, 'S'))
-                {
-                    totalCount++;
-                }
-
-                // S vertical
-                if (inGridRangeAndValueEquals(rowIndex + 1, columnIndex, 'M') &&
-                    inGridRangeAndValueEquals(rowIndex + 2, columnIndex, 'A') &&
-                    inGridRangeAndValueEquals(rowIndex + 3, columnIndex, 'S'))
-                {
-                    totalCount++;
-                }
-
-                // E horizontal
-                if (inGridRangeAndValueEquals(rowIndex, columnIndex + 1, 'M') &&
-                    inGridRangeAndValueEquals(rowIndex, columnIndex + 2, 'A') &&
-                    inGridRangeAndValueEquals(rowIndex, columnIndex + 3, 'S'))
-                {
-                    totalCount++;
-                }
-
-                // W horizontal
-                if (inGridRangeAndValueEquals(rowIndex, columnIndex - 1, 'M') &&
-                    inGridRangeAndValueEquals(rowIndex, columnIndex - 2, 'A') &&
-                    inGridRangeAndValueEquals(rowIndex, columnIndex - 3, 'S'))
-                {
-                    totalCount++;
-                }
-            }
+            bool MatchesInDirection((int, int) direction) =>
+                Enumerable.Range(0, searchString.Length)
+                    .All(i => grid.AreCoordsValid(Translate(coords, Scale(direction, i))) &&
+                              grid.GetCellValue(Translate(coords, Scale(direction, i))) == searchString[i]);
         }
 
         return totalCount.ToString();
@@ -95,33 +57,41 @@ public class Day4(string[] input) : Puzzle(input)
     public override string Part2Solution()
     {
         var totalCount = 0;
-        var grid = Grid2D<char>.CreateGrid2D(Input); // TODO: Generic type necessary?
+        var grid = new Grid2DChar(Input);
 
-        for (var rowIndex = 1; rowIndex < grid.Height - 1; rowIndex++)
+        foreach (var (rowIndex, columnIndex) in grid.GetCoordinatesEnumerable())
         {
-            for (var columnIndex = 1; columnIndex < grid.Width - 1; columnIndex++)
+            Console.WriteLine($"Row: {rowIndex}, Column: {columnIndex}");
+            if (grid.GetCellValue((columnIndex, rowIndex)) != 'A')
+                continue;
+
+            var inGridRangeAndValueEquals = (int rowI, int colI, char cellValue) =>
+                rowI >= 0 && rowI < grid.Height && colI >= 0 && colI < grid.Width
+                && grid.GetCellValue((colI, rowI)) == cellValue;
+
+            if ((inGridRangeAndValueEquals(rowIndex + 1, columnIndex - 1, 'M') &&
+                 inGridRangeAndValueEquals(rowIndex - 1, columnIndex + 1, 'S') ||
+                 inGridRangeAndValueEquals(rowIndex + 1, columnIndex - 1, 'S') &&
+                 inGridRangeAndValueEquals(rowIndex - 1, columnIndex + 1, 'M')) && (
+                    inGridRangeAndValueEquals(rowIndex - 1, columnIndex - 1, 'M') &&
+                    inGridRangeAndValueEquals(rowIndex + 1, columnIndex + 1, 'S') ||
+                    inGridRangeAndValueEquals(rowIndex - 1, columnIndex - 1, 'S') &&
+                    inGridRangeAndValueEquals(rowIndex + 1, columnIndex + 1, 'M')))
             {
-                if (grid.GetCellValue(columnIndex, rowIndex) != 'A')
-                    continue;
-
-                var inGridRangeAndValueEquals = (int rowI, int colI, char cellValue) =>
-                    rowI >= 0 && rowI < grid.Height && colI >= 0 && colI < grid.Width
-                    && grid.GetCellValue(colI, rowI) == cellValue;
-
-                if ((inGridRangeAndValueEquals(rowIndex + 1, columnIndex - 1, 'M') &&
-                     inGridRangeAndValueEquals(rowIndex - 1, columnIndex + 1, 'S') ||
-                     inGridRangeAndValueEquals(rowIndex + 1, columnIndex - 1, 'S') &&
-                     inGridRangeAndValueEquals(rowIndex - 1, columnIndex + 1, 'M')) && (
-                        inGridRangeAndValueEquals(rowIndex - 1, columnIndex - 1, 'M') &&
-                        inGridRangeAndValueEquals(rowIndex + 1, columnIndex + 1, 'S') ||
-                        inGridRangeAndValueEquals(rowIndex - 1, columnIndex - 1, 'S') &&
-                        inGridRangeAndValueEquals(rowIndex + 1, columnIndex + 1, 'M')))
-                {
-                    totalCount++;
-                }
+                totalCount++;
             }
         }
 
         return totalCount.ToString();
+    }
+
+    private static (int, int) Translate((int x, int y) vec1, (int dx, int dy) vec2)
+    {
+        return (vec1.x + vec2.dx, vec1.y + vec2.dy);
+    }
+
+    private static (int, int) Scale((int x, int y) vec, int scalar)
+    {
+        return (vec.x * scalar, vec.y * scalar);
     }
 }

@@ -25,21 +25,41 @@ public class Day4Test
     }
 
     [Test]
+    public void UseExampleInput_Part1SolutionCorrect()
+    {
+        var day = new Day4(
+        [
+            "MMMSXXMASM",
+            "MSAMXMSMSA",
+            "AMXSXMAAMM",
+            "MSAMASMSMX",
+            "XMASAMXAMM",
+            "XXAMMXXAMA",
+            "SMSMSASXSS",
+            "SAXAMASAAA",
+            "MAMMMXMMMM",
+            "MXMXAXMASX"
+        ]);
+        Assert.That(day.Part1Solution(), Is.EqualTo("18"));
+    }
+
+    [Test]
     public void UseExampleInput_Part2SolutionCorrect()
     {
         var day = new Day4(
         [
-            ".M.S......",
-            "..A..MSMS.",
-            ".M.S.MAA..",
-            "..A.ASMSM.",
-            ".M.S.M....",
-            "..........",
-            "S.S.S.S.S.",
-            ".A.A.A.A..",
-            "M.M.M.M.M.",
-            ".........."
+            "MMMSXXMASM",
+            "MSAMXMSMSA",
+            "AMXSXMAAMM",
+            "MSAMASMSMX",
+            "XMASAMXAMM",
+            "XXAMMXXAMA",
+            "SMSMSASXSS",
+            "SAXAMASAAA",
+            "MAMMMXMMMM",
+            "MXMXAXMASX"
         ]);
+
         Assert.That(day.Part2Solution(), Is.EqualTo("9"));
     }
 }
