@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using AdventOfCode2024.Utils;
 using NUnit.Framework;
 

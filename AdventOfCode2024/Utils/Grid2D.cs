@@ -1,6 +1,4 @@
-﻿using System.Formats.Asn1;
-
-namespace AdventOfCode2024.Utils;
+﻿namespace AdventOfCode2024.Utils;
 
 public class Grid2DChar : Grid2D<char>
 {
@@ -42,7 +40,6 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
 
     public IEnumerable<(int, int)> GetCoordinatesEnumerable()
     {
-        Console.WriteLine($"GetCoordinatesEnumerable: Height={Height}, Width={Width}");
         var rowIndexes = Enumerable.Range(0, Height);
         var columnIndexes = Enumerable.Range(0, Width);
         // Cartesian product
@@ -56,7 +53,6 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
 
     public T GetCellValue((int row, int column) coords)
     {
-        Console.WriteLine($"GetCellValue: {coords.row}, {coords.column}");
         if (coords.row < 0 || coords.row >= Height)
             throw new IndexOutOfRangeException("Row index is outside grid: " + coords.row);
         if (coords.column < 0 || coords.column >= Width)
@@ -163,7 +159,7 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         }
     }
 
-    private void SetCellValue((int row, int column) coords, T? cellValue)
+    private void SetCellValue((int row, int column) coords, T cellValue)
     {
         if (coords.row < 0 || coords.row >= Height || coords.column < 0 || coords.column >= Width)
         {

@@ -1,7 +1,4 @@
-﻿using System.Data;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.RegularExpressions;
-using AdventOfCode2024.Utils;
+﻿using AdventOfCode2024.Utils;
 
 namespace AdventOfCode2024.Day04;
 
@@ -61,7 +58,6 @@ public class Day4(string[] input) : Puzzle(input)
 
         foreach (var (rowIndex, columnIndex) in grid.GetCoordinatesEnumerable())
         {
-            Console.WriteLine($"Row: {rowIndex}, Column: {columnIndex}");
             if (grid.GetCellValue((columnIndex, rowIndex)) != 'A')
                 continue;
 

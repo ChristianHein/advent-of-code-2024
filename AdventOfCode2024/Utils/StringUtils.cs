@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace AdventOfCode2024.Utils;
+﻿namespace AdventOfCode2024.Utils;
 
 public class StringUtils
 {

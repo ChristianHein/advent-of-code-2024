@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using AdventOfCode2024.Day05;
 using NUnit.Framework;
@@ -58,7 +57,7 @@ public class Day5Test
             "75,29,13",
             "75,97,47,61,53",
             "61,13,29",
-            "97,13,75,29,47",
+            "97,13,75,29,47"
         ]);
 
         Assert.That(day.Part1Solution(), Is.EqualTo("143"));
@@ -96,7 +95,7 @@ public class Day5Test
             "75,29,13",
             "75,97,47,61,53",
             "61,13,29",
-            "97,13,75,29,47",
+            "97,13,75,29,47"
         ]);
 
         Assert.That(day.Part2Solution(), Is.EqualTo("123"));
