@@ -6,6 +6,19 @@ public class Day4(string[] input) : Puzzle(input)
 {
     public override int Number => 4;
 
+    // ReSharper disable InconsistentNaming
+    // @formatter:off
+    private readonly (int, int) N =  (-1,  0);
+    private readonly (int, int) NE = (-1,  1);
+    private readonly (int, int) E =  ( 0,  1);
+    private readonly (int, int) SE = ( 1,  1);
+    private readonly (int, int) S =  ( 1,  0);
+    private readonly (int, int) SW = ( 1, -1);
+    private readonly (int, int) W =  ( 0, -1);
+    private readonly (int, int) NW = (-1, -1);
+    // @formatter:on
+    // ReSharper restore InconsistentNaming
+
     public override string Part1Solution()
     {
         const string searchString = "XMAS";
@@ -19,24 +32,13 @@ public class Day4(string[] input) : Puzzle(input)
                 continue;
 
             // @formatter:off
-            // ReSharper disable InconsistentNaming
-            var N =  (-1,  0);
-            var NE = (-1,  1);
-            var E =  ( 0,  1);
-            var SE = ( 1,  1);
-            var S =  ( 1,  0);
-            var SW = ( 1, -1);
-            var W =  ( 0, -1);
-            var NW = (-1, -1);
-            // ReSharper restore InconsistentNaming
-
-            if (MatchesInDirection(N)) { totalCount++; }
+            if (MatchesInDirection(N))  { totalCount++; }
             if (MatchesInDirection(NE)) { totalCount++; }
-            if (MatchesInDirection(E)) { totalCount++; }
+            if (MatchesInDirection(E))  { totalCount++; }
             if (MatchesInDirection(SE)) { totalCount++; }
-            if (MatchesInDirection(S)) { totalCount++; }
+            if (MatchesInDirection(S))  { totalCount++; }
             if (MatchesInDirection(SW)) { totalCount++; }
-            if (MatchesInDirection(W)) { totalCount++; }
+            if (MatchesInDirection(W))  { totalCount++; }
             if (MatchesInDirection(NW)) { totalCount++; }
             // @formatter:on
 
@@ -56,26 +58,24 @@ public class Day4(string[] input) : Puzzle(input)
         var totalCount = 0;
         var grid = new Grid2DChar(Input);
 
-        foreach (var (rowIndex, columnIndex) in grid.GetCoordinatesEnumerable())
+        foreach (var coords in grid.GetCoordinatesEnumerable())
         {
-            if (grid.GetCellValue((columnIndex, rowIndex)) != 'A')
+            if (grid.GetCellValue(coords) != 'A')
                 continue;
 
-            var inGridRangeAndValueEquals = (int rowI, int colI, char cellValue) =>
-                rowI >= 0 && rowI < grid.Height && colI >= 0 && colI < grid.Width
-                && grid.GetCellValue((colI, rowI)) == cellValue;
-
-            if ((inGridRangeAndValueEquals(rowIndex + 1, columnIndex - 1, 'M') &&
-                 inGridRangeAndValueEquals(rowIndex - 1, columnIndex + 1, 'S') ||
-                 inGridRangeAndValueEquals(rowIndex + 1, columnIndex - 1, 'S') &&
-                 inGridRangeAndValueEquals(rowIndex - 1, columnIndex + 1, 'M')) && (
-                    inGridRangeAndValueEquals(rowIndex - 1, columnIndex - 1, 'M') &&
-                    inGridRangeAndValueEquals(rowIndex + 1, columnIndex + 1, 'S') ||
-                    inGridRangeAndValueEquals(rowIndex - 1, columnIndex - 1, 'S') &&
-                    inGridRangeAndValueEquals(rowIndex + 1, columnIndex + 1, 'M')))
+            if ((MatchesInDirection(NW, 'M') && MatchesInDirection(SE, 'S')
+                 || MatchesInDirection(NW, 'S') && MatchesInDirection(SE, 'M'))
+                && (MatchesInDirection(SW, 'M') && MatchesInDirection(NE, 'S')
+                    || MatchesInDirection(SW, 'S') && MatchesInDirection(NE, 'M')))
             {
                 totalCount++;
             }
+
+            continue;
+
+            bool MatchesInDirection((int, int) direction, char c) =>
+                grid.AreCoordsValid(Translate(coords, direction)) &&
+                grid.GetCellValue(Translate(coords, direction)) == c;
         }
 
         return totalCount.ToString();
