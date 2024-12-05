@@ -22,9 +22,7 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=MSTest/@EntryIndexedValue">d6790ab7-33c2-4425-b2c9-51480cd1a852</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=NUnit3x/@EntryIndexedValue">db4927dd-2e12-48a7-9a84-2b7e3e31b9c8</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2c538934_002De5ce_002D4e68_002D9754_002Df445344ac117/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="UseExampleInput_Part2SolutionCorrect" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::3453951C-0F75-44A1-830F-7C2B6D18237B::net8.0::AdventOfCode2024.Tests.Day05.Day5Test.UseExampleInput_Part2SolutionCorrect&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;ProjectFolder&gt;3453951C-0F75-44A1-830F-7C2B6D18237B/d:Day05&lt;/ProjectFolder&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=74540aab_002D6f8a_002D447d_002Db4ab_002D6ea484f8ee97/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Utils" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="D:\Dateien\Windows\Users\ChristianHein\RiderProjects\advent-of-code-2024\AdventOfCode2024.Tests" Presentation="&amp;lt;AdventOfCode2024.Tests&amp;gt;" /&gt;&#xD;

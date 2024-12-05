@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Formats.Asn1;
 
 namespace AdventOfCode2024.Day05;
 
@@ -7,26 +6,23 @@ public class Day5(string[] input) : Puzzle(input)
 {
     public override int Number => 5;
 
-    private readonly Dictionary<int, List<int>> _pageOrderingRules = new();
-    private readonly List<List<int>> _manuals = [];
-
-    private void ParseInput()
+    private (Dictionary<int, List<int>>, List<List<int>>) ParseInput()
     {
-        _pageOrderingRules.Clear();
-        _manuals.Clear();
+        Dictionary<int, List<int>> pageOrderingRules = new();
+        List<List<int>> updates = [];
 
         var lineIndex = 0;
         while (Input[lineIndex] != "")
         {
             var left = int.Parse(Input[lineIndex].Split("|", 2)[0]);
             var right = int.Parse(Input[lineIndex].Split("|", 2)[1]);
-            if (_pageOrderingRules.TryGetValue(left, out var ruleList))
+            if (pageOrderingRules.TryGetValue(left, out var ruleList))
             {
                 ruleList.Add(right);
             }
             else
             {
-                _pageOrderingRules.Add(left, [right]);
+                pageOrderingRules.Add(left, [right]);
             }
 
             lineIndex++;
@@ -39,18 +35,44 @@ public class Day5(string[] input) : Puzzle(input)
 
         while (lineIndex < Input.Length)
         {
-            _manuals.Add(Input[lineIndex].Split(",").Select(int.Parse).ToList());
+            updates.Add(Input[lineIndex].Split(",").Select(int.Parse).ToList());
             lineIndex++;
         }
+
+        return (pageOrderingRules, updates);
     }
 
-    public static bool CorrectlyOrdered(List<int> manual, Dictionary<int, List<int>> rules)
+    public override string Part1Solution()
     {
-        for (var i = 0; i < manual.Count; i++)
-        {
-            var leftPages = manual[..i];
+        var (pageOrderingRules, updates) = ParseInput();
+        return updates.Sum(manual => CorrectlyOrdered(manual, pageOrderingRules) ? GetMiddlePage(manual) : 0)
+            .ToString();
+    }
 
-            if (rules.TryGetValue(manual[i], out var ruleList) && ruleList.Any(page => leftPages.Contains(page)))
+    public override string Part2Solution()
+    {
+        var (pageOrderingRules, updates) = ParseInput();
+        var incorrectlyOrderedUpdates =
+            updates.Where(update => !CorrectlyOrdered(update, pageOrderingRules)).ToList();
+
+        var correctedUpdates =
+            incorrectlyOrderedUpdates.Select(update => SetCorrectOrder(update, pageOrderingRules))
+                .ToList();
+
+        Debug.Assert(incorrectlyOrderedUpdates.Count == correctedUpdates.Count);
+        Debug.Assert(correctedUpdates.All(update => CorrectlyOrdered(update, pageOrderingRules)));
+
+        return correctedUpdates.Sum(GetMiddlePage).ToString();
+    }
+
+    public static bool CorrectlyOrdered(List<int> updates, Dictionary<int, List<int>> rules)
+    {
+        for (var i = 0; i < updates.Count; i++)
+        {
+            var leftPages = updates[..i];
+
+            if (rules.TryGetValue(updates[i], out var validSuccessors)
+                && validSuccessors.Any(page => leftPages.Contains(page)))
             {
                 return false;
             }
@@ -59,60 +81,28 @@ public class Day5(string[] input) : Puzzle(input)
         return true;
     }
 
-    private static int GetMiddlePage(List<int> manual)
+    private static int GetMiddlePage(List<int> update)
     {
-        Debug.Assert(manual.Count % 2 == 1);
-        return manual[manual.Count / 2];
+        Debug.Assert(update.Count % 2 == 1);
+        return update[update.Count / 2];
     }
 
-    private static List<int> SetCorrectOrder(List<int> manual, Dictionary<int, List<int>> pageOrderingRules)
+    private static List<int> SetCorrectOrder(List<int> update, Dictionary<int, List<int>> pageOrderingRules)
     {
-        //Console.WriteLine($"ENTERED: Set correct order: {string.Join(", ", manual)}");
-        //Console.WriteLine(
-        //    $"pageOrderingRules: {string.Join("\n", pageOrderingRules.Select(res => "Key " + res.Key + ": Values = [" + string.Join(", ", res.Value) + "]").ToList())}"
-        //);
-        do
+        update.Sort(PageOrderComparison);
+        return update;
+
+        int PageOrderComparison(int a, int b)
         {
-            for (var i = 0; i < manual.Count; i++)
+            if (a == b)
             {
-                var leftPages = manual[..i];
-
-                if (pageOrderingRules.TryGetValue(manual[i], out var ruleList) &&
-                    ruleList.Any(page => leftPages.Contains(page)))
-                {
-                    //Console.WriteLine($"RULELIST: {string.Join(", ", ruleList)}");
-                    var temp = manual[i];
-                    manual.RemoveAt(i);
-                    manual.Insert(0, temp);
-                    break;
-                }
+                return 0;
             }
-        } while (!CorrectlyOrdered(manual, pageOrderingRules));
 
-        //Console.WriteLine($"EXITED: Set correct order: {string.Join(", ", manual)}");
-        return manual;
-    }
-
-    public override string Part1Solution()
-    {
-        ParseInput();
-        return _manuals.Sum(manual => CorrectlyOrdered(manual, _pageOrderingRules) ? GetMiddlePage(manual) : 0)
-            .ToString();
-    }
-
-    public override string Part2Solution()
-    {
-        ParseInput();
-        var incorrectlyOrderedManuals =
-            _manuals.Where(manual => !CorrectlyOrdered(manual, _pageOrderingRules)).ToList();
-
-        var correctedManuals =
-            incorrectlyOrderedManuals.Select(manual => SetCorrectOrder(new List<int>(manual), _pageOrderingRules))
-                .ToList();
-
-        Debug.Assert(incorrectlyOrderedManuals.Count == correctedManuals.Count);
-        Debug.Assert(correctedManuals.All(manual => CorrectlyOrdered(manual, _pageOrderingRules)));
-
-        return correctedManuals.Sum(GetMiddlePage).ToString();
+            return pageOrderingRules.TryGetValue(a, out var validSuccessors)
+                   && validSuccessors.Contains(b)
+                ? -1
+                : 1;
+        }
     }
 }
