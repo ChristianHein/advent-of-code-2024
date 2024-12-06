@@ -1,23 +1,11 @@
 ﻿using AdventOfCode2024.Utils;
+using static AdventOfCode2024.Utils.DirectionUtils;
 
 namespace AdventOfCode2024.Day04;
 
 public class Day4(string[] input) : Puzzle(input)
 {
     public override int Number => 4;
-
-    // ReSharper disable InconsistentNaming
-    // @formatter:off
-    private readonly (int, int) N =  (-1,  0);
-    private readonly (int, int) NE = (-1,  1);
-    private readonly (int, int) E =  ( 0,  1);
-    private readonly (int, int) SE = ( 1,  1);
-    private readonly (int, int) S =  ( 1,  0);
-    private readonly (int, int) SW = ( 1, -1);
-    private readonly (int, int) W =  ( 0, -1);
-    private readonly (int, int) NW = (-1, -1);
-    // @formatter:on
-    // ReSharper restore InconsistentNaming
 
     public override string Part1Solution()
     {
@@ -79,15 +67,5 @@ public class Day4(string[] input) : Puzzle(input)
         }
 
         return totalCount.ToString();
-    }
-
-    private static (int, int) Translate((int x, int y) vec1, (int dx, int dy) vec2)
-    {
-        return (vec1.x + vec2.dx, vec1.y + vec2.dy);
-    }
-
-    private static (int, int) Scale((int x, int y) vec, int scalar)
-    {
-        return (vec.x * scalar, vec.y * scalar);
     }
 }

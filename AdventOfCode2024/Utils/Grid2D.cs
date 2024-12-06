@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2024.Utils;
+﻿using System.Text;
+
+namespace AdventOfCode2024.Utils;
 
 public class Grid2DChar : Grid2D<char>
 {
@@ -7,6 +9,26 @@ public class Grid2DChar : Grid2D<char>
         Width = matrix.Length == 0 ? 0 : matrix[0].Length;
         Height = matrix.Length;
         FlatGrid = string.Join("", matrix).ToCharArray().ToList();
+    }
+
+    public Grid2DChar(Grid2DChar other) : base(other)
+    {
+    }
+
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        for (var row = 0; row < Height; row++)
+        {
+            for (var column = 0; column < Width; column++)
+            {
+                sb.Append(FlatGrid[row * Width + column]);
+            }
+
+            sb.AppendLine();
+        }
+
+        return sb.ToString();
     }
 }
 
@@ -22,6 +44,13 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         Width = 0;
         Height = 0;
         FlatGrid = [];
+    }
+
+    public Grid2D(Grid2D<T> other)
+    {
+        Width = other.Width;
+        Height = other.Height;
+        FlatGrid = [..other.FlatGrid];
     }
 
     public Grid2D(int width, int height)
@@ -159,7 +188,7 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         }
     }
 
-    private void SetCellValue((int row, int column) coords, T cellValue)
+    public void SetCellValue((int row, int column) coords, T cellValue)
     {
         if (coords.row < 0 || coords.row >= Height || coords.column < 0 || coords.column >= Width)
         {
