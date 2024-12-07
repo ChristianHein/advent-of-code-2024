@@ -9,6 +9,10 @@
         <OutputType>Exe</OutputType>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    </PropertyGroup>
+
     <ItemGroup>
         <Content Include="Day*\input">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

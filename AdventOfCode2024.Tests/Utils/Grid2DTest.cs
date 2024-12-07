@@ -30,8 +30,6 @@ public class Grid2DTest
     [TestCase<object>(null)]
     public void CreateTwoEmptyGrids_EmptyGridsOfSameTypeAreEqual<T>(T fillValue)
     {
-        // ReSharper disable once EqualExpressionComparison
-        Assert.That(new Grid2D<T>() == new Grid2D<T>());
         Assert.That(new Grid2D<T>(), Is.EqualTo(new Grid2D<T>()));
         Assert.That(new Grid2D<T>(), Is.EqualTo(new Grid2D<T>(0, 0)));
         Assert.That(new Grid2D<T>(0, 0), Is.EqualTo(new Grid2D<T>()));
