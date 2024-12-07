@@ -4,6 +4,7 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AArgumentOutOfRangeException_002Ecs_002Fl_003AC_0021_003FUsers_003FChristianHein_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F72e5853ed6f2c1967eff9d6f0cf6ba12744c8978c516cbc5e74d992944ab_003FArgumentOutOfRangeException_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AAssert_002Ecs_002Fl_003AC_0021_003FUsers_003FChristianHein_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F53539022a55f40bd95b3200c33b231c074e00_003Fe3_003F77869a0b_003FAssert_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AAssert_002Ecs_002Fl_003AC_0021_003FUsers_003FChristianHein_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F98514e314f1feddb3082dbe8507ecec1a81b6491c0db7dc53c2e8c13949e4360_003FAssert_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ABigInteger_002Ecs_002Fl_003AC_0021_003FUsers_003FChristianHein_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fabd46ac8ee802d348d427e8464646fbd78e6935adabb5b4ef9cb3f414c6806f_003FBigInteger_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ACount_002Ecs_002Fl_003AC_0021_003FUsers_003FChristianHein_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F2d65365881ce11f9bb776269d28fbe1dc6d0882bbe8615aafd4fa5a3d7ebc48e_003FCount_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AException_002Ecs_002Fl_003AC_0021_003FUsers_003FChristianHein_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fb4f8b29071cfcf73e927671b936ba53110f1b613a1cc9bef4fc4f07dd0fbe9_003FException_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AInt32_002Ecs_002Fl_003AC_0021_003FUsers_003FChristianHein_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Faef21ab35a6576cdcb99a56e6a8c84076d069f09ad1be52cfedaf49ee667855_003FInt32_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
@@ -19,14 +20,19 @@
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/FiltersState/=CodeStyle/@EntryIndexedValue">On</s:String>
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/FiltersState/=NamingFilter/@EntryIndexedValue">On</s:String>
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/FiltersState/=SpellingFilter/@EntryIndexedValue">On</s:String>
+	<s:Boolean x:Key="/Default/Environment/Highlighting/HighlightingEnabled/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingMode/@EntryValue">OnlyMarkers</s:String>
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\ChristianHein\AppData\Local\JetBrains\Rider2024.3\resharper-host\temp\Rider\vAny\CoverageData\_AdventOfCode2024.-1800420671\Snapshot\snapshot.utdcvr</s:String>
 	<s:Boolean x:Key="/Default/Environment/InlayHints/GeneralInlayHintsOptions/EnableInlayHints/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/ShowAdvancedOptions/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=CBFA9079_002D21BD_002D47A2_002DA828_002D5117D98A4D02/@EntryIndexedValue">3453951C-0F75-44A1-830F-7C2B6D18237B</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=MSTest/@EntryIndexedValue">d6790ab7-33c2-4425-b2c9-51480cd1a852</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=NUnit3x/@EntryIndexedValue">db4927dd-2e12-48a7-9a84-2b7e3e31b9c8</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3c6e9da7_002Da74b_002D44cf_002D8844_002D80dbc5213fa2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Utils" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="D:\Dateien\Windows\Users\ChristianHein\RiderProjects\advent-of-code-2024\AdventOfCode2024.Tests" Presentation="&amp;lt;AdventOfCode2024.Tests&amp;gt;" /&gt;&#xD;
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a4fb1d24_002Dc194_002D4b56_002Dafc1_002D780b694f684f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="InputLargeNAndLength_GetNthCombination_IsResultCorrect" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3453951C-0F75-44A1-830F-7C2B6D18237B::net8.0::AdventOfCode2024.Tests.Utils.CollectionUtilsTest.InputLargeNAndLength_GetNthCombination_IsResultCorrect&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
 	
