@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace AdventOfCode2024.Utils;
 
@@ -215,9 +216,11 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
                && Equals((Grid2D<T>)obj);
     }
 
+    [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
     public override int GetHashCode()
     {
-        return FlatGrid.GetHashCode();
+        // Don't know how better to define hash code without setting fields to readonly
+        return HashCode.Combine(FlatGrid, Width, Height);
     }
 
     public static bool operator ==(Grid2D<T>? left, Grid2D<T>? right)

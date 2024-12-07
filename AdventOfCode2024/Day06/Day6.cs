@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AdventOfCode2024.Utils;
+﻿using AdventOfCode2024.Utils;
 using static AdventOfCode2024.Utils.DirectionUtils;
 
 namespace AdventOfCode2024.Day06;
@@ -10,7 +9,7 @@ public class Day6(string[] input) : Puzzle(input)
 
     public override string Part1Solution()
     {
-        var grid = new Grid2DChar(input);
+        var grid = new Grid2DChar(Input);
 
         var pos = FindGuard(grid);
         while (true)
@@ -44,7 +43,7 @@ public class Day6(string[] input) : Puzzle(input)
 
     public override string Part2Solution()
     {
-        var originalGrid = new Grid2DChar(input);
+        var originalGrid = new Grid2DChar(Input);
         var guardStartPosition = FindGuard(originalGrid);
 
         // Brute force: Copy grid, insert new obstacle, check if guard loops
@@ -67,45 +66,17 @@ public class Day6(string[] input) : Puzzle(input)
         return obstaclesThatCreateGuardLoop.ToString();
     }
 
-    private static (int, int) CharToDirection(char c)
+    private static (int, int) FindGuard(Grid2DChar grid)
     {
-        return c switch
+        foreach (var coords in grid.GetCoordinatesEnumerable())
         {
-            '^' => N,
-            '>' => E,
-            'v' => S,
-            '<' => W,
-            _ => throw new ArgumentException($"Unknown direction '{c}'")
-        };
-    }
+            if ("<>^v".Contains(grid.GetCellValue(coords)))
+            {
+                return coords;
+            }
+        }
 
-    private static char DirectionToChar((int, int) direction)
-    {
-        if (direction == N)
-            return '^';
-
-        if (direction == E)
-            return '>';
-
-        if (direction == S)
-            return 'v';
-
-        if (direction == W)
-            return '<';
-
-        throw new ArgumentException($"Unknown direction '{direction}'");
-    }
-
-    private static char RotateClockwise(char guardDirection)
-    {
-        return guardDirection switch
-        {
-            '<' => '^',
-            '^' => '>',
-            '>' => 'v',
-            'v' => '<',
-            _ => throw new ArgumentException($"Unknown direction '{guardDirection}'")
-        };
+        throw new ArgumentException("No guard found");
     }
 
     private static bool DoesGuardLoop(Grid2DChar grid, (int, int) guardStartPosition)
@@ -152,17 +123,27 @@ public class Day6(string[] input) : Puzzle(input)
             }
         }
     }
-
-    private static (int, int) FindGuard(Grid2DChar grid)
+    private static (int, int) CharToDirection(char c)
     {
-        foreach (var coords in grid.GetCoordinatesEnumerable())
+        return c switch
         {
-            if ("<>^v".Contains(grid.GetCellValue(coords)))
-            {
-                return coords;
-            }
-        }
+            '^' => N,
+            '>' => E,
+            'v' => S,
+            '<' => W,
+            _ => throw new ArgumentException($"Unknown direction '{c}'")
+        };
+    }
 
-        throw new ArgumentException($"No guard found");
+    private static char RotateClockwise(char guardDirection)
+    {
+        return guardDirection switch
+        {
+            '<' => '^',
+            '^' => '>',
+            '>' => 'v',
+            'v' => '<',
+            _ => throw new ArgumentException($"Unknown direction '{guardDirection}'")
+        };
     }
 }

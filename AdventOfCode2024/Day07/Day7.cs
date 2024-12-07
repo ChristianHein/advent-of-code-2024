@@ -70,12 +70,15 @@ public class Day7(string[] input) : Puzzle(input)
                 return true;
             }
 
-            var indexToIncrement = i == currentOpCombo.Count + 1 ? 0 : currentOpCombo.Count - i;
-            CollectionUtils.IncrementCombination(currentOpCombo, operators, indexToIncrement);
-
-            if (indexToIncrement == 0)
+            var comboIndexToIncrement = i == currentOpCombo.Count + 1 ? 0 : currentOpCombo.Count - i;
+            if (comboIndexToIncrement == 0)
             {
-                var loopIterationsToSkip = (int)Math.Pow(operators.Count, indexToIncrement) - 1;
+                CollectionUtils.IncrementCombination(currentOpCombo, operators);
+            }
+            else
+            {
+                CollectionUtils.IncrementCombination(currentOpCombo, operators, comboIndexToIncrement);
+                var loopIterationsToSkip = (int)Math.Pow(operators.Count, comboIndexToIncrement) - 1;
                 comboCount += loopIterationsToSkip;
             }
         }
