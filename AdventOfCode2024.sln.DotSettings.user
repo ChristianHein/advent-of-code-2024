@@ -28,14 +28,12 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=CBFA9079_002D21BD_002D47A2_002DA828_002D5117D98A4D02/@EntryIndexedValue">3453951C-0F75-44A1-830F-7C2B6D18237B</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=MSTest/@EntryIndexedValue">d6790ab7-33c2-4425-b2c9-51480cd1a852</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=NUnit3x/@EntryIndexedValue">db4927dd-2e12-48a7-9a84-2b7e3e31b9c8</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b0ea8632_002D89f0_002D473b_002Da8e3_002D91e78d6a2457/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CollectionUtilsTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Or&gt;&#xD;
-    &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::3453951C-0F75-44A1-830F-7C2B6D18237B::net8.0::AdventOfCode2024.Tests.Utils.CollectionUtilsTest&lt;/TestId&gt;&#xD;
-    &lt;/TestAncestor&gt;&#xD;
-    &lt;ProjectFile&gt;3453951C-0F75-44A1-830F-7C2B6D18237B/d:Utils/f:Grid2DTest.cs&lt;/ProjectFile&gt;&#xD;
-  &lt;/Or&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=01a16655_002D5d2c_002D4b31_002Da3a1_002D577a073024f4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="UseExampleInput_Part2SolutionCorrect" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3453951C-0F75-44A1-830F-7C2B6D18237B::net8.0::AdventOfCode2024.Tests.Day08.Day8Test.UseExampleInput_Part2SolutionCorrect&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
 	
 	
 	

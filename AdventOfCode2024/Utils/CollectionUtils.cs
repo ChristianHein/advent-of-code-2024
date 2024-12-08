@@ -1,10 +1,23 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
+using System.Text;
 
 namespace AdventOfCode2024.Utils;
 
 public static class CollectionUtils
 {
+    public static string DictionaryToString<TKey, T>(Dictionary<TKey, List<T>> dictionary)
+        where TKey : notnull
+    {
+        var sb = new StringBuilder();
+        foreach (var (key, value) in dictionary)
+        {
+            sb.AppendLine($"{{{key}: {string.Join(", ", value)}}}");
+        }
+
+        return sb.ToString();
+    }
+
     public static void IncrementCombination<T>(List<T> list, List<T> allowedValues, int incrementIndexFromRight = 0)
         where T : notnull
     {

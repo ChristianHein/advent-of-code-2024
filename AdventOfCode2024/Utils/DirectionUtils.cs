@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCode2024.Utils;
 
-public class DirectionUtils
+public static class DirectionUtils
 {
     // ReSharper disable InconsistentNaming
     // @formatter:off
@@ -23,5 +23,10 @@ public class DirectionUtils
     public static (int, int) Scale((int x, int y) vec, int scalar)
     {
         return (vec.x * scalar, vec.y * scalar);
+    }
+
+    public static (int, int) Difference((int x, int y) vec1, (int x, int y) vec2)
+    {
+        return (vec1.x - vec2.x, vec1.y - vec2.y);
     }
 }
