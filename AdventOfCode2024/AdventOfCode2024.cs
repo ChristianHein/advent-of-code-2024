@@ -7,6 +7,7 @@ using AdventOfCode2024.Day05;
 using AdventOfCode2024.Day06;
 using AdventOfCode2024.Day07;
 using AdventOfCode2024.Day08;
+using AdventOfCode2024.Day09;
 
 namespace AdventOfCode2024;
 
@@ -72,6 +73,12 @@ public sealed class AdventOfCode2024
     public static void PrintDay8Solution()
     {
         var day = new Day8(File.ReadAllLines("Day08/input"));
+        Console.WriteLine(FormatDaySolutions(day));
+    }
+
+    public static void PrintDay9Solution()
+    {
+        var day = new Day9(File.ReadAllLines("Day09/input"));
         Console.WriteLine(FormatDaySolutions(day));
     }
 
