@@ -3,7 +3,7 @@ using static AdventOfCode2024.Utils.DirectionUtils;
 
 namespace AdventOfCode2024.Day06;
 
-public class Day6(string[] input) : Puzzle(input)
+public class Puzzle(string[] input) : BasePuzzle(input)
 {
     public override int Number => 6;
 

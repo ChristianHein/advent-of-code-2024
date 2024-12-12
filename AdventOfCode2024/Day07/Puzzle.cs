@@ -4,7 +4,7 @@ using AdventOfCode2024.Utils;
 
 namespace AdventOfCode2024.Day07;
 
-public class Day7(string[] input) : Puzzle(input)
+public class Puzzle(string[] input) : BasePuzzle(input)
 {
     public override int Number => 7;
 

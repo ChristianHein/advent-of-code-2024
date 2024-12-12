@@ -6,29 +6,29 @@ using NUnit.Framework;
 namespace AdventOfCode2024.Tests.Day05;
 
 [TestFixture]
-[TestOf(typeof(Day5))]
-public class Day5Test
+[TestOf(typeof(Puzzle))]
+public class PuzzleTest
 {
     private readonly string[] _realInput = File.ReadAllLines("Day05/input");
 
     [Test]
     public void UseRealInput_Part1Solution_IsCorrect()
     {
-        var day = new Day5(_realInput);
-        Assert.That(day.Part1Solution(), Is.EqualTo("4905"));
+        var puzzle = new Puzzle(_realInput);
+        Assert.That(puzzle.Part1Solution(), Is.EqualTo("4905"));
     }
 
     [Test]
     public void UseRealInput_Part2Solution_IsCorrect()
     {
-        var day = new Day5(_realInput);
-        Assert.That(day.Part2Solution(), Is.EqualTo("6204"));
+        var puzzle = new Puzzle(_realInput);
+        Assert.That(puzzle.Part2Solution(), Is.EqualTo("6204"));
     }
 
     [Test]
     public void UseExampleInput_Part1SolutionCorrect()
     {
-        var day = new Day5(
+        var puzzle = new Puzzle(
         [
             "47|53",
             "97|13",
@@ -60,13 +60,13 @@ public class Day5Test
             "97,13,75,29,47"
         ]);
 
-        Assert.That(day.Part1Solution(), Is.EqualTo("143"));
+        Assert.That(puzzle.Part1Solution(), Is.EqualTo("143"));
     }
 
     [Test]
     public void UseExampleInput_Part2SolutionCorrect()
     {
-        var day = new Day5(
+        var puzzle = new Puzzle(
         [
             "47|53",
             "97|13",
@@ -98,7 +98,7 @@ public class Day5Test
             "97,13,75,29,47"
         ]);
 
-        Assert.That(day.Part2Solution(), Is.EqualTo("123"));
+        Assert.That(puzzle.Part2Solution(), Is.EqualTo("123"));
     }
 
     [Test]
@@ -106,6 +106,6 @@ public class Day5Test
     {
         var manual = new List<int> { 1, 2, 3, 4, 5 };
         var rules = new Dictionary<int, List<int>> { { 3, [5] } };
-        Assert.That(Day5.CorrectlyOrdered(manual, rules), Is.True);
+        Assert.That(Puzzle.CorrectlyOrdered(manual, rules), Is.True);
     }
 }

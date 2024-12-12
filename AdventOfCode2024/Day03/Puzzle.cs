@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode2024.Day03;
 
-public partial class Day3(string[] input) : Puzzle(input)
+public partial class Puzzle(string[] input) : BasePuzzle(input)
 {
     public override int Number => 3;
 

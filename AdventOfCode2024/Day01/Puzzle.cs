@@ -2,7 +2,7 @@
 
 namespace AdventOfCode2024.Day01;
 
-public class Day1(string[] input) : Puzzle(input)
+public class Puzzle(string[] input) : BasePuzzle(input)
 {
     public override int Number => 1;
 

@@ -5,23 +5,23 @@ using NUnit.Framework;
 namespace AdventOfCode2024.Tests.Day02;
 
 [TestFixture]
-[TestOf(typeof(Day2))]
-public class Day2Test
+[TestOf(typeof(Puzzle))]
+public class PuzzleTest
 {
     private readonly string[] _realInput = File.ReadAllLines("Day02/input");
 
     [Test]
     public void UseRealInput_Part1Solution_IsCorrect()
     {
-        var day = new Day2(_realInput);
-        Assert.That(day.Part1Solution(), Is.EqualTo("220"));
+        var puzzle = new Puzzle(_realInput);
+        Assert.That(puzzle.Part1Solution(), Is.EqualTo("220"));
     }
 
     [Test]
     public void UseRealInput_Part2Solution_IsCorrect()
     {
-        var day = new Day2(_realInput);
-        Assert.That(day.Part2Solution(), Is.EqualTo("296"));
+        var puzzle = new Puzzle(_realInput);
+        Assert.That(puzzle.Part2Solution(), Is.EqualTo("296"));
     }
 
     [Test]

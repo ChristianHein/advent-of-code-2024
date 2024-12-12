@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCode2024;
 
-public abstract class Puzzle(string[] input)
+public abstract class BasePuzzle(string[] input)
 {
     protected readonly string[] Input = input;
 

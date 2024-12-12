@@ -2,7 +2,7 @@
 
 using Report = List<int>;
 
-public class Day2(string[] input) : Puzzle(input)
+public class Puzzle(string[] input) : BasePuzzle(input)
 {
     public override int Number => 2;
 

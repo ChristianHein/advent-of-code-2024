@@ -1,13 +1,4 @@
 ﻿using System.Diagnostics;
-using AdventOfCode2024.Day01;
-using AdventOfCode2024.Day02;
-using AdventOfCode2024.Day03;
-using AdventOfCode2024.Day04;
-using AdventOfCode2024.Day05;
-using AdventOfCode2024.Day06;
-using AdventOfCode2024.Day07;
-using AdventOfCode2024.Day08;
-using AdventOfCode2024.Day09;
 
 namespace AdventOfCode2024;
 
@@ -26,73 +17,74 @@ public sealed class AdventOfCode2024
         PrintDay6Solution();
         PrintDay7Solution();
         PrintDay8Solution();
+        PrintDay9Solution();
     }
 
     public static void PrintDay1Solution()
     {
-        var day = new Day1(File.ReadAllLines("Day01/input"));
-        Console.WriteLine(FormatDaySolutions(day));
+        var puzzle = new Day01.Puzzle(File.ReadAllLines("Day01/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
     public static void PrintDay2Solution()
     {
-        var day = new Day2(File.ReadAllLines("Day02/input"));
-        Console.WriteLine(FormatDaySolutions(day));
+        var puzzle = new Day02.Puzzle(File.ReadAllLines("Day02/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
     public static void PrintDay3Solution()
     {
-        var day = new Day3(File.ReadAllLines("Day03/input"));
-        Console.WriteLine(FormatDaySolutions(day));
+        var puzzle = new Day03.Puzzle(File.ReadAllLines("Day03/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
     public static void PrintDay4Solution()
     {
-        var day = new Day4(File.ReadAllLines("Day04/input"));
-        Console.WriteLine(FormatDaySolutions(day));
+        var puzzle = new Day04.Puzzle(File.ReadAllLines("Day04/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
     public static void PrintDay5Solution()
     {
-        var day = new Day5(File.ReadAllLines("Day05/input"));
-        Console.WriteLine(FormatDaySolutions(day));
+        var puzzle = new Day05.Puzzle(File.ReadAllLines("Day05/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
     public static void PrintDay6Solution()
     {
-        var day = new Day6(File.ReadAllLines("Day06/input"));
-        Console.WriteLine(FormatDaySolutions(day));
+        var puzzle = new Day06.Puzzle(File.ReadAllLines("Day06/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
     public static void PrintDay7Solution()
     {
-        var day = new Day7(File.ReadAllLines("Day07/input"));
-        Console.WriteLine(FormatDaySolutions(day));
+        var puzzle = new Day07.Puzzle(File.ReadAllLines("Day07/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
     public static void PrintDay8Solution()
     {
-        var day = new Day8(File.ReadAllLines("Day08/input"));
-        Console.WriteLine(FormatDaySolutions(day));
+        var puzzle = new Day08.Puzzle(File.ReadAllLines("Day08/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
     public static void PrintDay9Solution()
     {
-        var day = new Day9(File.ReadAllLines("Day09/input"));
-        Console.WriteLine(FormatDaySolutions(day));
+        var puzzle = new Day09.Puzzle(File.ReadAllLines("Day09/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
-    private static string FormatDaySolutions(Puzzle day, bool printExecutionTimes = true)
+    private static string FormatDaySolutions(BasePuzzle puzzle, bool printExecutionTimes = true)
     {
         var watch = Stopwatch.StartNew();
-        var part1Solution = day.Part1Solution();
+        var part1Solution = puzzle.Part1Solution();
         var part1ElapsedMs = watch.ElapsedMilliseconds;
 
         watch = Stopwatch.StartNew();
-        var part2Solution = day.Part2Solution();
+        var part2Solution = puzzle.Part2Solution();
         var part2ElapsedMs = watch.ElapsedMilliseconds;
 
-        var output = $"Day {day.Number:00}{Environment.NewLine}";
+        var output = $"Day {puzzle.Number:00}{Environment.NewLine}";
 
         output += $"  Part 1 solution: '{part1Solution}'{Environment.NewLine}";
         if (printExecutionTimes)

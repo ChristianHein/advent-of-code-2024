@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AdventOfCode2024.Day09;
 
-public class Day9(string[] input) : Puzzle(input)
+public class Puzzle(string[] input) : BasePuzzle(input)
 {
     public override int Number => 9;
 
