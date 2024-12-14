@@ -127,12 +127,20 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
             .ToList();
     }
 
+    public List<(int, int)> GetValidNeighborsCoords((int row, int column) origin, List<(int, int)> directions)
+    {
+        return directions
+            .Select(dir => DirectionUtils.Translate(origin, dir))
+            .Where(AreCoordsValid).ToList();
+    }
+
     public void InsertRow(int rowIndex, List<T> row)
     {
         if (rowIndex < 0 || rowIndex > Height)
             throw new IndexOutOfRangeException();
         if (row.Count != Width)
-            throw new ArgumentException("Inserted row must be same width as grid");
+            throw new ArgumentException(
+                $"Inserted row must be same width as grid. Row size: {row.Count}, grid width: {Width}");
 
         FlatGrid.InsertRange(rowIndex * Width, row);
         Height++;
@@ -143,7 +151,8 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         if (columnIndex < 0 || columnIndex > Width)
             throw new IndexOutOfRangeException();
         if (column.Count != Width)
-            throw new ArgumentException("Inserted column must be same height as grid");
+            throw new ArgumentException(
+                $"Inserted column must be same height as grid. Column size: {column.Count}, grid height: {Height}");
 
         for (var rowIndex = 0; rowIndex < Height; rowIndex++)
         {

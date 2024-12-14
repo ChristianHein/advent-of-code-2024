@@ -15,6 +15,10 @@ public static class DirectionUtils
     // @formatter:on
     // ReSharper restore InconsistentNaming
 
+    public static readonly List<(int, int)> CardinalDirections = [N, E, S, W];
+    public static readonly List<(int, int)> OrdinalDirections = [NE, SE, SW, NW];
+    public static readonly List<(int, int)> CardinalAndOrdinalDirections = [N, NE, E, SE, S, SW, W, NW];
+
     public static (int, int) Translate((int x, int y) vec1, (int dx, int dy) vec2)
     {
         return (vec1.x + vec2.dx, vec1.y + vec2.dy);
