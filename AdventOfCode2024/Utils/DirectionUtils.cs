@@ -4,14 +4,14 @@ public static class DirectionUtils
 {
     // ReSharper disable InconsistentNaming
     // @formatter:off
-    public static readonly (int, int) N =  (-1,  0);
-    public static readonly (int, int) NE = (-1,  1);
-    public static readonly (int, int) E =  ( 0,  1);
-    public static readonly (int, int) SE = ( 1,  1);
-    public static readonly (int, int) S =  ( 1,  0);
-    public static readonly (int, int) SW = ( 1, -1);
-    public static readonly (int, int) W =  ( 0, -1);
-    public static readonly (int, int) NW = (-1, -1);
+    public static readonly (sbyte, sbyte) N =  (-1,  0);
+    public static readonly (sbyte, sbyte) NE = (-1,  1);
+    public static readonly (sbyte, sbyte) E =  ( 0,  1);
+    public static readonly (sbyte, sbyte) SE = ( 1,  1);
+    public static readonly (sbyte, sbyte) S =  ( 1,  0);
+    public static readonly (sbyte, sbyte) SW = ( 1, -1);
+    public static readonly (sbyte, sbyte) W =  ( 0, -1);
+    public static readonly (sbyte, sbyte) NW = (-1, -1);
     // @formatter:on
     // ReSharper restore InconsistentNaming
 

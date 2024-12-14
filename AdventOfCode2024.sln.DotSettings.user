@@ -30,9 +30,10 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=CBFA9079_002D21BD_002D47A2_002DA828_002D5117D98A4D02/@EntryIndexedValue">3453951C-0F75-44A1-830F-7C2B6D18237B</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=MSTest/@EntryIndexedValue">d6790ab7-33c2-4425-b2c9-51480cd1a852</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=NUnit3x/@EntryIndexedValue">db4927dd-2e12-48a7-9a84-2b7e3e31b9c8</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2e6a0657_002D4aec_002D4456_002Dbbac_002D538701d45165/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;AdventOfCode2024.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="D:\Dateien\Windows\Users\ChristianHein\RiderProjects\advent-of-code-2024\AdventOfCode2024.Tests" Presentation="&amp;lt;AdventOfCode2024.Tests&amp;gt;" /&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=12a46e17_002D6790_002D4241_002Dbc9e_002D0f6861f06999/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Day12" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;ProjectFolder&gt;3453951C-0F75-44A1-830F-7C2B6D18237B/d:Day12&lt;/ProjectFolder&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c8bf927a_002D1eb6_002D456a_002Da0f3_002D3df367bdd056/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Day09" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;ProjectFolder&gt;3453951C-0F75-44A1-830F-7C2B6D18237B/d:Day09&lt;/ProjectFolder&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
