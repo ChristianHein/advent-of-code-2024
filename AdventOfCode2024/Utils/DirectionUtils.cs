@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2024.Utils;
+﻿using System.Numerics;
+
+namespace AdventOfCode2024.Utils;
 
 public static class DirectionUtils
 {
@@ -15,31 +17,34 @@ public static class DirectionUtils
     // @formatter:on
     // ReSharper restore InconsistentNaming
 
-    public static readonly List<(int, int)> CardinalDirections = [N, E, S, W];
-    public static readonly List<(int, int)> OrdinalDirections = [NE, SE, SW, NW];
+    public static readonly List<(sbyte, sbyte)> CardinalDirections = [N, E, S, W];
+    public static readonly List<(sbyte, sbyte)> OrdinalDirections = [NE, SE, SW, NW];
     public static readonly List<(int, int)> CardinalAndOrdinalDirections = [N, NE, E, SE, S, SW, W, NW];
 
-    public static bool IsVertical((int, int) direction)
+    public static bool IsVertical<T>((T, T) direction)
     {
-        return direction == N || direction == S;
+        return direction.Equals(N) || direction.Equals(S);
     }
 
-    public static bool IsHorizontal((int, int) direction)
+    public static bool IsHorizontal<T>((T, T) direction)
     {
-        return direction == E || direction == W;
+        return direction.Equals(E) || direction.Equals(W);
     }
 
-    public static (int, int) Translate((int x, int y) vec1, (int dx, int dy) vec2)
+    public static (T, T) Translate<T>((T x, T y) vec1, (T dx, T dy) vec2)
+        where T : IAdditionOperators<T, T, T>
     {
         return (vec1.x + vec2.dx, vec1.y + vec2.dy);
     }
 
-    public static (int, int) Scale((int x, int y) vec, int scalar)
+    public static (T, T) Scale<T>((T x, T y) vec, T scalar)
+        where T : IMultiplyOperators<T, T, T>
     {
         return (vec.x * scalar, vec.y * scalar);
     }
 
-    public static (int, int) Difference((int x, int y) vec1, (int x, int y) vec2)
+    public static (T, T) Difference<T>((T x, T y) vec1, (T x, T y) vec2)
+        where T : ISubtractionOperators<T, T, T>
     {
         return (vec1.x - vec2.x, vec1.y - vec2.y);
     }

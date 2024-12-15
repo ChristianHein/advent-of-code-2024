@@ -1,4 +1,5 @@
 ﻿using AdventOfCode2024.Utils;
+using static AdventOfCode2024.Utils.DirectionUtils;
 
 namespace AdventOfCode2024.Day08;
 
@@ -43,10 +44,8 @@ public class Puzzle(string[] input) : BasePuzzle(input)
                     if (location1 == location2)
                         continue;
 
-                    var antinode1 = DirectionUtils.Translate(location1,
-                        DirectionUtils.Difference(location1, location2));
-                    var antinode2 = DirectionUtils.Translate(location2,
-                        DirectionUtils.Difference(location2, location1));
+                    var antinode1 = Translate(location1, Difference(location1, location2));
+                    var antinode2 = Translate(location2, Difference(location2, location1));
 
                     if (grid.AreCoordsValid(antinode1))
                     {
@@ -81,8 +80,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
                     var i = 1;
                     while (true)
                     {
-                        var antinode1 = DirectionUtils.Translate(location1,
-                            DirectionUtils.Scale(DirectionUtils.Difference(location1, location2), i));
+                        var antinode1 = Translate(location1, Scale(Difference(location1, location2), i));
                         if (grid.AreCoordsValid(antinode1))
                         {
                             antinodes.Add(antinode1);
@@ -97,8 +95,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
                     var j = 1;
                     while (true)
                     {
-                        var antinode2 = DirectionUtils.Translate(location2,
-                            DirectionUtils.Scale(DirectionUtils.Difference(location2, location1), j));
+                        var antinode2 = Translate(location2, Scale(Difference(location2, location1), j));
                         if (grid.AreCoordsValid(antinode2))
                         {
                             antinodes.Add(antinode2);

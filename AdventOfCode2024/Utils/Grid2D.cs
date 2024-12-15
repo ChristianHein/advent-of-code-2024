@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Text;
 
 namespace AdventOfCode2024.Utils;
@@ -131,7 +132,7 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
     }
 
     public List<(int rowIndex, int columnIndex)> GetValidNeighborsCoords((int row, int column) origin,
-        List<(int, int)> directions)
+        List<(sbyte, sbyte)> directions)
     {
         return directions
             .Select(dir => DirectionUtils.Translate(origin, dir))

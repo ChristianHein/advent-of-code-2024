@@ -9,9 +9,9 @@ public partial class Puzzle(string[] input) : BasePuzzle(input)
 
     private struct ClawMachine
     {
-        public (ushort x, ushort y) ButtonATranslation;
-        public (ushort x, ushort y) ButtonBTranslation;
-        public (ushort x, ushort y) PrizeTarget;
+        public (short x, short y) ButtonATranslation;
+        public (short x, short y) ButtonBTranslation;
+        public (long x, long y) PrizeTarget;
 
         public override string ToString()
         {
@@ -44,28 +44,28 @@ public partial class Puzzle(string[] input) : BasePuzzle(input)
             clawMachines.Add(new ClawMachine
             {
                 ButtonATranslation = (
-                    ushort.Parse(buttonATranslationMatch.Groups[1].Value),
-                    ushort.Parse(buttonATranslationMatch.Groups[2].Value)),
+                    short.Parse(buttonATranslationMatch.Groups[1].Value),
+                    short.Parse(buttonATranslationMatch.Groups[2].Value)),
                 ButtonBTranslation = (
-                    ushort.Parse(buttonBTranslationMatch.Groups[1].Value),
-                    ushort.Parse(buttonBTranslationMatch.Groups[2].Value)),
+                    short.Parse(buttonBTranslationMatch.Groups[1].Value),
+                    short.Parse(buttonBTranslationMatch.Groups[2].Value)),
                 PrizeTarget = (
-                    ushort.Parse(prizeTargetMatch.Groups[1].Value),
-                    ushort.Parse(prizeTargetMatch.Groups[2].Value)),
+                    long.Parse(prizeTargetMatch.Groups[1].Value),
+                    long.Parse(prizeTargetMatch.Groups[2].Value)),
             });
         }
 
         return clawMachines;
     }
 
-    private static int? MinimumTokensToSpendToWin(ClawMachine clawMachine)
+    private static long? MinimumTokensToSpendToWin(ClawMachine clawMachine)
     {
         const int maxButtonPresses = 100;
 
-        var solutions = new List<(int a, int b)>();
-        for (var pressesA = 0; pressesA <= maxButtonPresses; pressesA++)
+        var solutions = new List<(long a, long b)>();
+        for (var pressesA = 0L; pressesA <= maxButtonPresses; pressesA++)
         {
-            for (var pressesB = 0; pressesB <= maxButtonPresses; pressesB++)
+            for (var pressesB = 0L; pressesB <= maxButtonPresses; pressesB++)
             {
                 if (Translate(
                         Scale(clawMachine.ButtonATranslation, pressesA),
@@ -89,8 +89,8 @@ public partial class Puzzle(string[] input) : BasePuzzle(input)
         var clawMachines = ParseInput(Input);
 
         var minimumTokensSum = clawMachines
-            .Select(MinimumTokensToSpendToWin)
-            .Sum(minTokens => minTokens ?? 0);
+            .Select(c => (int?)MinimumTokensToSpendToWin(c))
+            .Sum(minTokens => minTokens ?? 0L);
 
         return minimumTokensSum.ToString();
     }
