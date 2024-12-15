@@ -21,6 +21,7 @@ public sealed class AdventOfCode2024
         PrintDay10Solution();
         PrintDay11Solution();
         PrintDay12Solution();
+        PrintDay13Solution();
         PrintDay15Solution();
     }
 
@@ -93,6 +94,12 @@ public sealed class AdventOfCode2024
     public static void PrintDay12Solution()
     {
         var puzzle = new Day12.Puzzle(File.ReadAllLines("Day12/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
+    }
+
+    public static void PrintDay13Solution()
+    {
+        var puzzle = new Day13.Puzzle(File.ReadAllLines("Day13/input"));
         Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
