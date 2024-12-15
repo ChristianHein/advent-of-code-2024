@@ -68,4 +68,9 @@ public static class CollectionUtils
 
         return result;
     }
+
+    public static IEnumerable<(int, int)> CartesianProduct(IEnumerable<int> left, IEnumerable<int> right)
+    {
+        return left.SelectMany(_ => right, (a, b) => (a, b));
+    }
 }

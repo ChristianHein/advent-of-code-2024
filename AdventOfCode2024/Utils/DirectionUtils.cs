@@ -19,6 +19,16 @@ public static class DirectionUtils
     public static readonly List<(int, int)> OrdinalDirections = [NE, SE, SW, NW];
     public static readonly List<(int, int)> CardinalAndOrdinalDirections = [N, NE, E, SE, S, SW, W, NW];
 
+    public static bool IsVertical((int, int) direction)
+    {
+        return direction == N || direction == S;
+    }
+
+    public static bool IsHorizontal((int, int) direction)
+    {
+        return direction == E || direction == W;
+    }
+
     public static (int, int) Translate((int x, int y) vec1, (int dx, int dy) vec2)
     {
         return (vec1.x + vec2.dx, vec1.y + vec2.dy);

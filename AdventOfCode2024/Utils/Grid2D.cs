@@ -16,6 +16,10 @@ public class Grid2DChar : Grid2D<char>
     {
     }
 
+    public Grid2DChar(Grid2D<char> other) : base(other)
+    {
+    }
+
     public override string ToString()
     {
         var sb = new StringBuilder();
@@ -68,12 +72,11 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         FlatGrid = Enumerable.Repeat(fillValue, width * height).ToList();
     }
 
-    public IEnumerable<(int, int)> GetCoordinatesEnumerable()
+    public IEnumerable<(int rowIndex, int columnIndex)> GetCoordinatesEnumerable()
     {
         var rowIndexes = Enumerable.Range(0, Height);
         var columnIndexes = Enumerable.Range(0, Width);
-        // Cartesian product
-        return rowIndexes.SelectMany(_ => columnIndexes, (rowIndex, columnIndex) => (rowIndex, columnIndex));
+        return CollectionUtils.CartesianProduct(rowIndexes, columnIndexes);
     }
 
     public bool AreCoordsValid((int row, int column) coords)
@@ -127,7 +130,8 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
             .ToList();
     }
 
-    public List<(int, int)> GetValidNeighborsCoords((int row, int column) origin, List<(int, int)> directions)
+    public List<(int rowIndex, int columnIndex)> GetValidNeighborsCoords((int row, int column) origin,
+        List<(int, int)> directions)
     {
         return directions
             .Select(dir => DirectionUtils.Translate(origin, dir))
@@ -206,6 +210,17 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         }
 
         FlatGrid[coords.row * Width + coords.column] = cellValue;
+    }
+
+    public void SwapCells((int row, int column) cellA, (int row, int column) cellB)
+    {
+        if (!AreCoordsValid(cellA) || !AreCoordsValid(cellB))
+        {
+            throw new IndexOutOfRangeException();
+        }
+
+        (FlatGrid[cellA.row * Width + cellA.column], FlatGrid[cellB.row * Width + cellB.column]) =
+            (FlatGrid[cellB.row * Width + cellB.column], FlatGrid[cellA.row * Width + cellA.column]);
     }
 
     public bool Equals(Grid2D<T>? other)
