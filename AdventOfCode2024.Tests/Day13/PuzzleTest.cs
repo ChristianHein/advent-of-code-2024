@@ -47,6 +47,6 @@ public class PuzzleTest
     public void UseRealInput_Part2Solution_IsCorrect()
     {
         var puzzle = new Puzzle(_realInput);
-        Assert.That(puzzle.Part2Solution(), Is.EqualTo("-1"));
+        Assert.That(puzzle.Part2Solution(), Is.EqualTo("74015623345775"));
     }
 }
