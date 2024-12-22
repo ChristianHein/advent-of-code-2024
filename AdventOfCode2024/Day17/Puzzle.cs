@@ -146,34 +146,29 @@ public class Puzzle(string[] input) : BasePuzzle(input)
         // (declare-const a (_ BitVec 64))
         var a = ctx.MkBVConst("a", 64);
 
-        // (declare-fun f ((_ BitVec 64)) (_ BitVec 64))
-        var f = ctx.MkFuncDecl("f", ctx.MkBitVecSort(64), ctx.MkBitVecSort(64));
-
-        // (assert (forall ((x (_ BitVec 64))) (= (f x)
-        //             (bvxor
-        //                 (bvxor (bvand x (_ bv7 64)) (_ bv4 64))
-        //                 (bvand (bvlshr x (bvxor (bvand x (_ bv7 64)) (_ bv1 64)))
-        //                        (_ bv7 64))))))
-        var x = (BitVecExpr)ctx.MkBound(0, ctx.MkBitVecSort(64));
-        var functionBody = ctx.MkBVXOR(
-            ctx.MkBVXOR(ctx.MkBVAND(x, ctx.MkBV(7, 64)), ctx.MkBV(4, 64)),
-            ctx.MkBVAND(ctx.MkBVLSHR(x, ctx.MkBVXOR(ctx.MkBVAND(x, ctx.MkBV(7, 64)), ctx.MkBV(1, 64))),
-                ctx.MkBV(7, 64)));
-        solver.Add(ctx.MkForall([ctx.MkBitVecSort(64)], [ctx.MkSymbol("x")], ctx.MkEq(ctx.MkApp(f, x), functionBody)));
+        // (define-fun f ((x (_ BitVec 64))) (_ BitVec 64)
+        //     (bvxor
+        //         (bvxor (bvand x (_ bv7 64)) (_ bv4 64))
+        //         (bvand (bvlshr x (bvxor (bvand x (_ bv7 64)) (_ bv1 64)))
+        //                (_ bv7 64))))
+        // ReSharper disable once MoveLocalFunctionAfterJumpStatement
+        BitVecExpr F(BitVecExpr x)
+        {
+            return ctx.MkBVXOR(
+                ctx.MkBVXOR(ctx.MkBVAND(x, ctx.MkBV(7, 64)), ctx.MkBV(4, 64)),
+                ctx.MkBVAND(ctx.MkBVLSHR(x, ctx.MkBVXOR(ctx.MkBVAND(x, ctx.MkBV(7, 64)), ctx.MkBV(1, 64))),
+                    ctx.MkBV(7, 64)));
+        }
 
         var instructions = new List<byte> { 2, 4, 1, 1, 7, 5, 1, 5, 4, 5, 0, 3, 5, 5, 3, 0 };
         for (var i = 0; i < instructions.Count; i++)
         {
             // (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv{i} 64)))) (_ bv{instructions[i]} 64)))
-            solver.Assert(ctx.MkEq(ctx.MkApp(f, ctx.MkBVLSHR(a, ctx.MkBV(3 * i, 64))), ctx.MkBV(instructions[i], 64)));
+            solver.Assert(ctx.MkEq(F(ctx.MkBVLSHR(a, ctx.MkBV(3 * i, 64))), ctx.MkBV(instructions[i], 64)));
         }
 
-        // NOTE: Technically, this next MkMinimize is necessary to always get the smallest answer. But it makes Z3 much
-        // slower, whereas without minimize the answer currently is still correct and is generated instantly. So I've
-        // commented it out for now.
-
         // (minimize a)
-        //solver.MkMinimize(a);
+        solver.MkMinimize(a);
 
         var status = solver.Check();
         if (status != Status.SATISFIABLE)
