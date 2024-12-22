@@ -19,7 +19,7 @@ public static class DirectionUtils
 
     public static readonly List<(sbyte, sbyte)> CardinalDirections = [N, E, S, W];
     public static readonly List<(sbyte, sbyte)> OrdinalDirections = [NE, SE, SW, NW];
-    public static readonly List<(int, int)> CardinalAndOrdinalDirections = [N, NE, E, SE, S, SW, W, NW];
+    public static readonly List<(sbyte, sbyte)> CardinalAndOrdinalDirections = [N, NE, E, SE, S, SW, W, NW];
 
     public static bool IsVertical<T>((T, T) direction)
     {

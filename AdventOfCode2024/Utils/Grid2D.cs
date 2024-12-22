@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 using System.Text;
 
 namespace AdventOfCode2024.Utils;
@@ -23,18 +22,7 @@ public class Grid2DChar : Grid2D<char>
 
     public override string ToString()
     {
-        var sb = new StringBuilder();
-        for (var row = 0; row < Height; row++)
-        {
-            for (var column = 0; column < Width; column++)
-            {
-                sb.Append(FlatGrid[row * Width + column]);
-            }
-
-            sb.AppendLine();
-        }
-
-        return sb.ToString();
+        return ToString(char.ToString, null);
     }
 }
 
@@ -239,6 +227,31 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
         if (ReferenceEquals(this, obj)) return true;
         return obj.GetType() == GetType()
                && Equals((Grid2D<T>)obj);
+    }
+
+    public string ToString(Func<T, string> toStringFunction, char? separator = ' ')
+    {
+        if (Width == 0 || Height == 0)
+        {
+            return string.Empty;
+        }
+
+        var sb = new StringBuilder();
+        for (var row = 0; row < Height; row++)
+        {
+            for (var column = 0; column < Width; column++)
+            {
+                sb.Append(toStringFunction(FlatGrid[row * Width + column]));
+                if (separator.HasValue && column != Width - 1)
+                {
+                    sb.Append(separator);
+                }
+            }
+
+            sb.AppendLine();
+        }
+
+        return sb.ToString();
     }
 
     [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
