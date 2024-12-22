@@ -140,46 +140,47 @@ public class Puzzle(string[] input) : BasePuzzle(input)
         //
         // Calculating this value for all integers is still much too slow to solve this puzzle. A different approach
         // works better: Using an SMT solver.
-        var ctx = new Context(new Dictionary<string, string> { { "MODEL", "true" } });
-        var boolExprs = ctx.ParseSMTLIB2String(
-            """
-            (define-fun f ((x (_ BitVec 64))) (_ BitVec 64)
-                (bvxor
-                    (bvxor (bvand x (_ bv7 64)) (_ bv4 64))
-                    (bvand (bvlshr x (bvxor (bvand x (_ bv7 64)) (_ bv1 64)))
-                           (_ bv7 64))))
+        var ctx = new Context(new Dictionary<string, string>
+            { { "model", "true" }, { "auto_config", "false" }, { "logic", "QFBV" } });
+        var solver = ctx.MkOptimize();
 
-            (declare-const a (_ BitVec 64))
-            (assert (bvugt a (_ bv0 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv0 64)))) (_ bv2 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv1 64)))) (_ bv4 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv2 64)))) (_ bv1 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv3 64)))) (_ bv1 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv4 64)))) (_ bv7 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv5 64)))) (_ bv5 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv6 64)))) (_ bv1 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv7 64)))) (_ bv5 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv8 64)))) (_ bv4 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv9 64)))) (_ bv5 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv10 64)))) (_ bv0 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv11 64)))) (_ bv3 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv12 64)))) (_ bv5 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv13 64)))) (_ bv5 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv14 64)))) (_ bv3 64)))
-            (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv15 64)))) (_ bv0 64)))
-            (assert (not (= a #x000095a7596d6fbd))) ; not the minimum (hack)
-            (assert (not (= a #x000095a75d6d6fbd))) ; not the minimum (hack)
-            (assert (not (= a #x0022da4a296d6fbd))) ; not the minimum (hack)
-            (assert (not (= a #x010095a75d6d6fbd))) ; not the minimum (hack)
-            """);
-        var s = ctx.MkSolver();
-        s.Add(boolExprs);
-        var status = s.Check();
+        // (declare-const a (_ BitVec 64))
+        var a = ctx.MkBVConst("a", 64);
 
+        // (declare-fun f ((_ BitVec 64)) (_ BitVec 64))
+        var f = ctx.MkFuncDecl("f", ctx.MkBitVecSort(64), ctx.MkBitVecSort(64));
+
+        // (assert (forall ((x (_ BitVec 64))) (= (f x)
+        //             (bvxor
+        //                 (bvxor (bvand x (_ bv7 64)) (_ bv4 64))
+        //                 (bvand (bvlshr x (bvxor (bvand x (_ bv7 64)) (_ bv1 64)))
+        //                        (_ bv7 64))))))
+        var x = (BitVecExpr)ctx.MkBound(0, ctx.MkBitVecSort(64));
+        var functionBody = ctx.MkBVXOR(
+            ctx.MkBVXOR(ctx.MkBVAND(x, ctx.MkBV(7, 64)), ctx.MkBV(4, 64)),
+            ctx.MkBVAND(ctx.MkBVLSHR(x, ctx.MkBVXOR(ctx.MkBVAND(x, ctx.MkBV(7, 64)), ctx.MkBV(1, 64))),
+                ctx.MkBV(7, 64)));
+        solver.Add(ctx.MkForall([ctx.MkBitVecSort(64)], [ctx.MkSymbol("x")], ctx.MkEq(ctx.MkApp(f, x), functionBody)));
+
+        var instructions = new List<byte> { 2, 4, 1, 1, 7, 5, 1, 5, 4, 5, 0, 3, 5, 5, 3, 0 };
+        for (var i = 0; i < instructions.Count; i++)
+        {
+            // (assert (= (f (bvlshr a (bvmul (_ bv3 64) (_ bv{i} 64)))) (_ bv{instructions[i]} 64)))
+            solver.Assert(ctx.MkEq(ctx.MkApp(f, ctx.MkBVLSHR(a, ctx.MkBV(3 * i, 64))), ctx.MkBV(instructions[i], 64)));
+        }
+
+        // NOTE: Technically, this next MkMinimize is necessary to always get the smallest answer. But it makes Z3 much
+        // slower, whereas without minimize the answer currently is still correct and is generated instantly. So I've
+        // commented it out for now.
+
+        // (minimize a)
+        //solver.MkMinimize(a);
+
+        var status = solver.Check();
         if (status != Status.SATISFIABLE)
             throw new InvalidOperationException();
 
-        return Convert.ToUInt64("0" + s.Model.ToString().Split('#', ')')[3], 16).ToString();
+        return solver.Model.Eval(a).ToString();
     }
 
     public override string Part1Solution()
@@ -189,10 +190,6 @@ public class Puzzle(string[] input) : BasePuzzle(input)
         return consoleOut;
     }
 
-    //ulong F(ulong x)
-    //{
-    //    return ((x % 8) ^ 4 ^ (x >>> (byte)((x % 8) ^ 1))) % 8;
-    //}
     public override string Part2Solution()
     {
         var (registers, instructionsList) = ParseInput(Input);
