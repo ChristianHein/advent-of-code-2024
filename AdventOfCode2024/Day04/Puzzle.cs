@@ -11,7 +11,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
     {
         const string searchString = "XMAS";
 
-        var grid = new Grid2DChar(Input);
+        var grid = Grid2DCharFactory.Create(Input);
 
         var totalCount = 0;
         foreach (var coords in grid.GetCoordinatesEnumerable())
@@ -44,7 +44,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
     public override string Part2Solution()
     {
         var totalCount = 0;
-        var grid = new Grid2DChar(Input);
+        var grid = Grid2DCharFactory.Create(Input);
 
         foreach (var coords in grid.GetCoordinatesEnumerable())
         {

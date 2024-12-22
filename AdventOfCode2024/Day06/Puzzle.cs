@@ -9,7 +9,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
 
     public override string Part1Solution()
     {
-        var grid = new Grid2DChar(Input);
+        var grid = Grid2DCharFactory.Create(Input);
 
         var pos = FindGuard(grid);
         while (true)
@@ -43,7 +43,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
 
     public override string Part2Solution()
     {
-        var originalGrid = new Grid2DChar(Input);
+        var originalGrid = Grid2DCharFactory.Create(Input);
         var guardStartPosition = FindGuard(originalGrid);
 
         // Brute force: Copy grid, insert new obstacle, check if guard loops
@@ -54,7 +54,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
             if (symbol == '#' || "<>^v".Contains(symbol))
                 continue;
 
-            var grid = new Grid2DChar(originalGrid);
+            var grid = new Grid2D<char>(originalGrid);
             grid.SetCellValue(coords, '#');
 
             if (DoesGuardLoop(grid, guardStartPosition))
@@ -66,7 +66,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
         return obstaclesThatCreateGuardLoop.ToString();
     }
 
-    private static (int, int) FindGuard(Grid2DChar grid)
+    private static (int, int) FindGuard(Grid2D<char> grid)
     {
         foreach (var coords in grid.GetCoordinatesEnumerable())
         {
@@ -79,7 +79,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
         throw new ArgumentException("No guard found");
     }
 
-    private static bool DoesGuardLoop(Grid2DChar grid, (int, int) guardStartPosition)
+    private static bool DoesGuardLoop(Grid2D<char> grid, (int, int) guardStartPosition)
     {
         var pos = guardStartPosition;
         var guard = grid.GetCellValue(pos);

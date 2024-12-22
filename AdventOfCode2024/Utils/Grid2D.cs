@@ -1,28 +1,19 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
-
 namespace AdventOfCode2024.Utils;
 
-public class Grid2DChar : Grid2D<char>
+public class Grid2DCharFactory : Grid2D<char>
 {
-    public Grid2DChar(string[] matrix)
+    public static Grid2D<char> Create(string[] matrix)
+    {
+        return new Grid2DCharFactory(matrix);
+    }
+
+    private Grid2DCharFactory(string[] matrix)
     {
         Width = matrix.Length == 0 ? 0 : matrix[0].Length;
         Height = matrix.Length;
         FlatGrid = string.Join("", matrix).ToCharArray().ToList();
-    }
-
-    public Grid2DChar(Grid2DChar other) : base(other)
-    {
-    }
-
-    public Grid2DChar(Grid2D<char> other) : base(other)
-    {
-    }
-
-    public override string ToString()
-    {
-        return ToString(char.ToString, null);
     }
 }
 

@@ -7,10 +7,10 @@ public class Puzzle(string[] input) : BasePuzzle(input)
 {
     public override int Number => 8;
 
-    private static (Grid2DChar grid, Dictionary<char, List<(int, int)>> antennas) ParseInput(string[] input)
+    private static (Grid2D<char> grid, Dictionary<char, List<(int, int)>> antennas) ParseInput(string[] input)
     {
         var antennas = new Dictionary<char, List<(int, int)>>();
-        var grid = new Grid2DChar(input);
+        var grid = Grid2DCharFactory.Create(input);
         foreach (var coords in grid.GetCoordinatesEnumerable())
         {
             var cell = grid.GetCellValue(coords);

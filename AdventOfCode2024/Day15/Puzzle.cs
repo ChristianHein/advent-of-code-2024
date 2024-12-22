@@ -14,7 +14,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
     private const char BigBoxRightSymbol = ']';
     private const char WallSymbol = '#';
 
-    private static (Grid2DChar, (sbyte, sbyte)[]) ParseInput(string[] input)
+    private static (Grid2D<char>, (sbyte, sbyte)[]) ParseInput(string[] input)
     {
         var empty = 0;
         while (input[empty] != "")
@@ -24,7 +24,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
 
         Debug.Assert(empty < input.Length);
 
-        var grid = new Grid2DChar(input[..empty]);
+        var grid = Grid2DCharFactory.Create(input[..empty]);
         var directions = string.Join(null, input[empty..])
             .Select(c =>
             {
@@ -42,7 +42,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
         return (grid, directions);
     }
 
-    private static Grid2DChar StretchWarehouseToDoubleWidth(Grid2DChar grid)
+    private static Grid2D<char> StretchWarehouseToDoubleWidth(Grid2D<char> grid)
     {
         var newGrid = new Grid2D<char>(grid.Width * 2, 0);
         foreach (var row in grid.GetRows())
@@ -62,10 +62,10 @@ public class Puzzle(string[] input) : BasePuzzle(input)
             newGrid.InsertRow(newGrid.Height, newRow);
         }
 
-        return new Grid2DChar(newGrid);
+        return new Grid2D<char>(newGrid);
     }
 
-    private static void ExecuteRobotMovements(Grid2DChar grid, (int, int) robotStart, (sbyte, sbyte)[] moves)
+    private static void ExecuteRobotMovements(Grid2D<char> grid, (int, int) robotStart, (sbyte, sbyte)[] moves)
     {
         Debug.Assert(moves.All(move => DirectionUtils.CardinalDirections.Contains(move)));
 

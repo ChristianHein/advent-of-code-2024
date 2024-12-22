@@ -90,7 +90,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
 
     public override string Part1Solution()
     {
-        var grid = new Grid2DChar(Input);
+        var grid = Grid2DCharFactory.Create(Input);
 
         var regions = GetRegions(grid);
         return regions.Sum(region => region.Area * region.Perimeter).ToString();
@@ -98,7 +98,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
 
     public override string Part2Solution()
     {
-        var grid = new Grid2DChar(Input);
+        var grid = Grid2DCharFactory.Create(Input);
 
         var regions = GetRegions(grid);
         return regions.Sum(region => region.Area * region.Sides).ToString();
