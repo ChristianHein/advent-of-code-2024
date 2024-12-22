@@ -140,8 +140,7 @@ public class Puzzle(string[] input) : BasePuzzle(input)
         //
         // Calculating this value for all integers is still much too slow to solve this puzzle. A different approach
         // works better: Using an SMT solver.
-        var ctx = new Context(new Dictionary<string, string>
-            { { "model", "true" }, { "auto_config", "false" }, { "logic", "QFBV" } });
+        var ctx = new Context();
         var solver = ctx.MkOptimize();
 
         // (declare-const a (_ BitVec 64))
