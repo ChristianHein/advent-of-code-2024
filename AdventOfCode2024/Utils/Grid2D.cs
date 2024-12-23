@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
+
 namespace AdventOfCode2024.Utils;
 
 public class Grid2DCharFactory : Grid2D<char>
@@ -220,7 +221,7 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
                && Equals((Grid2D<T>)obj);
     }
 
-    public string ToString(Func<T, string> toStringFunction, char? separator = ' ')
+    public string ToString(Func<T, string> toStringFunction, string? separator = " ")
     {
         if (Width == 0 || Height == 0)
         {
@@ -233,7 +234,7 @@ public class Grid2D<T> : IEquatable<Grid2D<T>>
             for (var column = 0; column < Width; column++)
             {
                 sb.Append(toStringFunction(FlatGrid[row * Width + column]));
-                if (separator.HasValue && column != Width - 1)
+                if (column != Width - 1)
                 {
                     sb.Append(separator);
                 }
