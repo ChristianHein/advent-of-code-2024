@@ -151,6 +151,12 @@ public sealed class AdventOfCode2024
         Console.WriteLine(FormatDaySolutions(puzzle));
     }
 
+    public static void PrintDay24Solution()
+    {
+        var puzzle = new Day24.Puzzle(File.ReadAllLines("Day24/input"));
+        Console.WriteLine(FormatDaySolutions(puzzle));
+    }
+
     private static string FormatDaySolutions(BasePuzzle puzzle, bool printExecutionTimes = true)
     {
         var watch = Stopwatch.StartNew();
